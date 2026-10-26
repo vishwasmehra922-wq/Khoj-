@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHOJ — Discover Everything</title>
+<meta name="description" content="KHOJ: search the web, images, videos and news in one place.">
+<meta name="theme-color" content="#08080b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#08080b;--card:#111118;--text:#f7f7fb;
+--muted:#a2a5b5;--border:#292733;--purple:#8b5cf6;
+}
+body{
+font-family:Arial,sans-serif;background:var(--bg);color:var(--text);
+min-height:100vh;overflow-x:hidden;
+}
+body.light{--bg:#f5f6fc;--card:#fff;--text:#171827;--muted:#65697a;--border:#ddd}
+.hidden{display:none!important}
+header{
+display:flex;justify-content:space-between;align-items:center;
+padding:17px 6%;border-bottom:1px solid var(--border);
+position:sticky;top:0;background:var(--bg);z-index:5;
+}
+.logo{
+font-size:27px;font-weight:900;letter-spacing:2px;
+background:linear-gradient(90deg,#c4b5fd,#67e8f9);
+-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+nav{display:flex;gap:22px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+.actions{display:flex;gap:9px;align-items:center}
+.auth-slot{display:flex;gap:9px;align-items:center}
+.user-chip{
+font-size:13px;color:var(--muted);max-width:120px;
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+button{cursor:pointer;font:inherit}
+.btn{
+border:1px solid var(--border);border-radius:11px;padding:10px 15px;
+background:var(--card);color:var(--text);
+}
+.primary{
+border:0;background:linear-gradient(110deg,#7c3aed,#4f46e5);
+color:white;font-weight:bold;border-radius:11px;padding:12px 18px;
+}
+main{max-width:1050px;margin:auto;padding:80px 22px 60px;text-align:center}
+.badge{
+display:inline-block;border:1px solid var(--border);border-radius:30px;
+padding:9px 15px;color:var(--muted);font-size:12px;margin-bottom:27px;
+}
+h1{font-size:clamp(43px,8vw,75px);line-height:1.1;letter-spacing:-2px}
+.gradient{
+background:linear-gradient(100deg,#c4b5fd,#818cf8,#67e8f9);
+-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.subtitle{max-width:600px;margin:22px auto 32px;color:var(--muted);line-height:1.8}
+.search-shell{
+position:relative;max-width:690px;margin:auto;padding:2px;
+border-radius:20px;isolation:isolate;overflow:hidden;
+}
+.search-shell:before{
+content:"";position:absolute;z-index:-2;
+width:200%;height:400%;left:-50%;top:-150%;
+background:conic-gradient(transparent,#8b5cf6,#67e8f9,#4f46e5,transparent 35%);
+animation:beam 4s linear infinite;
+}
+@keyframes beam{to{transform:rotate(360deg)}}
+.search-box{
+display:flex;align-items:center;gap:12px;padding:9px;
+background:#15151c;border-radius:18px;min-height:64px;
+}
+.search-icon{font-size:24px;color:#a78bfa;padding-left:10px}
+.search-box input{
+flex:1;min-width:0;background:transparent;border:0;outline:0;
+color:white;font-size:16px;padding:13px 3px;
+}
+.search-box input::placeholder{color:#858594}
+.search-box button{white-space:nowrap}
+.categories{
+display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:25px 0;
+}
+.category{
+border:1px solid var(--border);background:var(--card);
+color:var(--muted);border-radius:12px;padding:11px 15px;
+}
+.category.active,.category:hover{
+background:#5428a5;border-color:#a78bfa;color:white;
+}
+.hint{font-size:12px;color:var(--muted);margin-bottom:65px}
+.section-title{font-size:27px;margin-bottom:10px}
+.section-subtitle{font-size:14px;color:var(--muted);margin-bottom:27px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:left}
+.card{
+padding:24px;border:1px solid var(--border);border-radius:18px;
+background:linear-gradient(145deg,var(--card),#15121f);
+transition:.2s;
+}
+.card:hover{transform:translateY(-4px);border-color:#7755bd}
+.card-icon{font-size:30px;margin-bottom:16px}
+.card h3{font-size:17px;margin-bottom:10px}
+.card p{font-size:13px;line-height:1.7;color:var(--muted)}
+.card button{
+margin-top:17px;background:none;border:0;color:#b9a0ff;font-weight:bold;
+}
+.ai-section{
+margin-top:65px;padding:38px 20px;border-radius:22px;
+border:1px solid var(--border);
+background:radial-gradient(ellipse at top,#352064,var(--card) 72%);
+}
+.ai-section p{max-width:550px;margin:14px auto 22px;color:var(--muted);line-height:1.8}
+#results{
+display:none;text-align:left;margin:45px auto;max-width:750px;
+padding:24px;background:var(--card);border:1px solid var(--border);border-radius:18px;
+}
+#results h2{font-size:22px;margin-bottom:12px}
+#results p{color:var(--muted);line-height:1.7;font-size:14px}
+.result-link{display:inline-block;margin-top:15px;color:#c4b5fd;text-decoration:none}
+footer{
+text-align:center;padding:30px 15px;border-top:1px solid var(--border);
+color:var(--muted);font-size:12px;line-height:2.3;
+}
+footer a{color:var(--muted);text-decoration:none;margin:0 8px}
+.menu-btn{display:none}
+@media(max-width:750px){
+header{padding:14px 5%}
+nav{
+display:none;position:absolute;top:60px;left:0;width:100%;
+padding:20px;background:var(--bg);flex-direction:column;
+border-bottom:1px solid var(--border);
+}
+nav.open{display:flex}
+.menu-btn{display:inline-block}
+.user-chip{display:none}
+.actions .primary{padding:10px 14px;font-size:13px}
+main{padding:58px 16px}
+h1{letter-spacing:-1px}
+.subtitle{font-size:14px}
+.search-box{gap:5px;min-height:57px}
+.search-box input{font-size:13px}
+.search-box button{padding:12px;font-size:12px}
+.categories{gap:8px}
+.category{padding:10px 11px;font-size:12px}
+.cards{grid-template-columns:1fr}
+.hint{margin-bottom:45px}
+}
+@media(prefers-reduced-motion:reduce){
+.mic{animation:none}
+.search-shell:before{animation:none}
+.card{transition:none}
+}
+
+
+
+
+/* ===== In-site search results ===== */
+.inst{display:inline-flex;align-items:center;gap:8px;margin:6px 0 10px}
+#resultList{margin-top:6px}
+.res-item{padding:14px 0;border-top:1px solid var(--border)}
+.res-item:first-child{border-top:0}
+.res-url{font-size:12px;color:var(--muted);word-break:break-all}
+.res-title{display:block;margin:4px 0;font-size:17px;line-height:1.4;color:#c4b5fd;text-decoration:none}
+.res-title:hover{text-decoration:underline}
+.res-snip{font-size:14px;line-height:1.65;color:var(--muted)}
+.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.img-card{display:block;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card);text-decoration:none}
+.img-card img{display:block;width:100%;height:120px;object-fit:cover}
+.img-card span{display:block;padding:8px 10px;font-size:11px;line-height:1.4;color:var(--muted);overflow:hidden;max-height:3.6em}
+#moreBtn{margin-top:16px}
+
+/* ===== Category + card icons ===== */
+.category{display:inline-flex;align-items:center;gap:8px}
+.ci,.ico svg{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+.ci{width:16px;height:16px;stroke-width:2}
+.ico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:#fff}
+.ico svg{width:24px;height:24px;stroke-width:1.8}
+.ai-section .ico{margin:0 auto 16px}
+.c1{background:linear-gradient(135deg,#7c3aed,#4f46e5)}
+.c2{background:linear-gradient(135deg,#a855f7,#ec4899)}
+.c3{background:linear-gradient(135deg,#06b6d4,#3b82f6)}
+.c4{background:linear-gradient(135deg,#f97316,#ef4444)}
+.c5{background:linear-gradient(135deg,#f59e0b,#f97316)}
+.c6{background:linear-gradient(135deg,#10b981,#06b6d4)}
+
+/* ===== Theme toggle (moon / sun) ===== */
+.tt{position:relative;width:64px;height:32px;flex-shrink:0;border-radius:999px;cursor:pointer;
+background:#09090b;border:1px solid #27272a;transition:background .3s,border-color .3s;outline:none}
+.tt:focus-visible{box-shadow:0 0 0 2px #8b5cf6}
+body.light .tt{background:#fff;border-color:#e4e4e7}
+.tt-slot{position:absolute;top:3px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;transition:opacity .3s}
+.tt-slot svg,.tt-knob svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.tt-l{left:3px;color:#000;opacity:0}
+.tt-r{right:3px;color:#6b7280}
+body.light .tt-l{opacity:1}
+body.light .tt-r{opacity:0}
+.tt-knob{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;
+background:#27272a;color:#fff;display:flex;align-items:center;justify-content:center;
+transition:transform .3s,background .3s,color .3s}
+body.light .tt-knob{transform:translateX(32px);background:#e5e7eb;color:#374151}
+.tt-knob .k-sun{display:none}
+body.light .tt-knob .k-moon{display:none}
+body.light .tt-knob .k-sun{display:block}
+
+/* ===== Search suggestions, mic, history ===== */
+.search-wrap{position:relative;max-width:690px;margin:auto}
+.mic{width:40px;height:40px;flex-shrink:0;border:0;border-radius:50%;display:flex;align-items:center;justify-content:center;
+color:#fff;background:linear-gradient(135deg,#f45d05 0%,#f0629f 55%,#7c3aed 100%);
+box-shadow:0 0 0 0 rgba(240,98,159,.55),0 4px 14px rgba(244,93,5,.35);transition:transform .2s;animation:micglow 2.8s ease-out infinite}
+.mic svg{width:18px;height:18px}
+.mic:hover{transform:scale(1.08)}
+.mic:active{transform:scale(.94)}
+@keyframes micglow{0%{box-shadow:0 0 0 0 rgba(240,98,159,.5),0 4px 14px rgba(244,93,5,.35)}70%,100%{box-shadow:0 0 0 12px rgba(240,98,159,0),0 4px 14px rgba(244,93,5,.35)}}
+.mic.on{color:#f87171;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.sug{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:30;text-align:left;
+background:var(--card);border:1px solid var(--border);border-radius:14px;
+box-shadow:0 12px 30px rgba(0,0,0,.35);overflow-y:auto;max-height:320px}
+.sug-head{padding:10px 16px 4px;font-size:11px;color:var(--muted)}
+.sug-item{display:flex;width:100%;gap:10px;align-items:center;padding:12px 16px;border:0;
+background:none;color:var(--text);font-size:14px;text-align:left}
+.sug-item:hover,.sug-item.active{background:rgba(139,92,246,.18)}
+.sug-ico{color:var(--muted)}
+.history{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin:0 0 22px}
+.hist-title{font-size:12px;color:var(--muted)}
+.chip{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:999px;padding:7px 13px;font-size:12px}
+.chip:hover{border-color:#a78bfa}
+.chip-clear{background:none;border:0;color:#b9a0ff;font-size:12px}
+.lt{position:relative;width:64px;height:32px;flex-shrink:0;padding:0;border-radius:999px;cursor:pointer;
+background:#09090b;border:1px solid #27272a;transition:background .3s,border-color .3s;outline:none}
+.lt:focus-visible{box-shadow:0 0 0 2px #8b5cf6}
+body.light .lt{background:#fff;border-color:#e4e4e7}
+.lt span{position:absolute;top:0;width:31px;height:30px;display:flex;align-items:center;justify-content:center;
+font-size:14px;font-weight:700;z-index:2;color:#6b7280;transition:color .25s}
+.lt .a{left:0;color:#fff}
+.lt .h{left:31px}
+.lt.hi .a{color:#6b7280}
+.lt.hi .h{color:#fff}
+.lt .k{position:absolute;top:3px;left:3px;width:27px;height:24px;border-radius:999px;z-index:1;
+background:linear-gradient(135deg,#f45d05,#f0629f 55%,#7c3aed);transition:transform .3s}
+.lt.hi .k{transform:translateX(29px)}
+@media(max-width:750px){
+.logo{font-size:21px;letter-spacing:1px}
+.actions{gap:6px}
+.actions .btn{padding:8px 10px}
+.mic{width:36px;height:36px}
+}
+
+
+/* ===== Voice search overlay ===== */
+.vo{position:fixed;inset:0;z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:24px;
+background:radial-gradient(ellipse 85% 45% at 50% 100%,#f45d05 0%,#f6a13c 40%,rgba(246,168,90,0) 75%),
+linear-gradient(180deg,#a8c3e8 0%,#c5b5dc 38%,#e8aecb 66%,#f0b0b8 100%);color:#2a2140}
+.vo.open{display:flex}
+.vo-orb{width:min(72vw,300px);aspect-ratio:1;position:relative}
+.vo-orb canvas{width:100%;height:100%;display:block}
+.vo-status{font-size:14px;min-height:20px;text-align:center}
+.vo-pill{display:flex;align-items:center;gap:10px;width:min(560px,100%);background:#141416;border-radius:999px;
+padding:8px 8px 8px 22px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.vo-pill input{flex:1;min-width:0;background:none;border:0;outline:0;color:#fff;font-size:16px;padding:10px 0}
+.vo-pill input::placeholder{color:#8b8b93}
+.vo-mic{width:46px;height:46px;border-radius:50%;border:0;background:#f3f3f6;color:#141416;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.vo-mic.on{background:#ef4444;color:#fff;animation:pulse 1s infinite}
+.vo-mic svg{width:20px;height:20px}
+.vo-close{position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:0;background:rgba(20,20,22,.55);color:#fff;font-size:22px}
+
+/* ===== Login modal (always dark) ===== */
+.a-modal{
+position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+background:rgba(0,0,0,.7);backdrop-filter:blur(6px);padding:16px;
+}
+.a-modal.open{display:flex}
+.a-box{
+position:relative;width:min(390px,100%);max-height:94vh;overflow-y:auto;
+padding:32px 27px;color:#f7f7fb;text-align:left;
+background:#111118;border:1px solid #3a3550;border-radius:22px;
+box-shadow:0 20px 60px rgba(0,0,0,.6);
+}
+.a-close{
+position:absolute;top:12px;right:14px;width:32px;height:32px;border:0;border-radius:50%;
+background:none;color:#cbd5e1;font-size:22px;
+}
+.a-close:hover{background:rgba(255,255,255,.1)}
+.a-box h2{text-align:center;font-size:27px;margin-bottom:8px}
+.a-sub{text-align:center;color:#a2a5b5;font-size:14px;margin-bottom:26px}
+.a-field{position:relative;margin-bottom:28px}
+.a-field input{
+width:100%;padding:13px 4px;color:#fff;background:transparent;border:0;
+border-bottom:2px solid #6b6f80;outline:0;font:inherit;font-size:15px;
+}
+.a-field label{position:absolute;left:4px;top:13px;color:#a2a5b5;pointer-events:none;transition:.25s}
+.a-field input:focus{border-bottom-color:#a78bfa}
+.a-field input:focus+label,.a-field input:not(:placeholder-shown)+label{top:-12px;font-size:12px;color:#c4b5fd}
+.a-eye{
+position:absolute;right:2px;top:10px;padding:4px 6px;border:0;background:none;
+color:#a2a5b5;font-size:12px;
+}
+.a-btn{
+width:100%;padding:14px;border:0;border-radius:11px;font-size:15px;font-weight:bold;
+background:linear-gradient(110deg,#7c3aed,#4f46e5);color:#fff;transition:.2s;
+}
+.a-btn:hover{transform:translateY(-2px)}
+.a-btn:disabled{opacity:.6;cursor:wait;transform:none}
+.a-ghost{margin-top:12px;background:rgba(255,255,255,.1);color:#e5e7eb}
+.a-google{background:#f1f1f5;color:#2b2d3a}
+.a-google b{color:#4285F4;font-size:18px;margin-right:6px}
+.a-link{
+display:block;margin:-10px 0 22px auto;padding:0;border:0;background:none;
+color:#a2a5b5;font-size:12px;
+}
+.a-link:hover,.a-switch a:hover{color:#c4b5fd}
+.a-or{display:flex;align-items:center;gap:12px;color:#8a8ea0;font-size:10px;margin:22px 0}
+.a-or:before,.a-or:after{content:"";flex:1;height:1px;background:#33323f}
+.a-switch{margin-top:22px;text-align:center;color:#a2a5b5;font-size:12px}
+.a-switch a{color:#a78bfa;font-weight:bold;cursor:pointer}
+.a-msg{display:none;margin-bottom:18px;padding:10px 12px;border-radius:9px;font-size:13px;line-height:1.4}
+.a-msg.show{display:block}
+.a-msg.error{background:rgba(239,68,68,.16);border:1px solid rgba(248,113,113,.5);color:#fecaca}
+.a-msg.ok{background:rgba(34,197,94,.15);border:1px solid rgba(74,222,128,.5);color:#bbf7d0}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">⌕ KHOJ</div>
+  <nav id="nav">
+    <a href="#home">Home</a>
+    <a href="#explore">Explore</a>
+    <a href="#ai">AI Search</a>
+    <a href="#about">About</a>
+  </nav>
+  <div class="actions">
+    <button class="lt" id="langBtn" type="button" aria-label="Language / भाषा"><i class="k"></i><span class="a">A</span><span class="h">अ</span></button>
+    <div class="tt" id="themeToggle" role="button" tabindex="0" aria-label="Switch theme" aria-pressed="true">
+      <span class="tt-slot tt-l"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span>
+      <span class="tt-slot tt-r"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span class="tt-knob"><span class="k-moon"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span><span class="k-sun"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span></span>
+    </div>
+
+    <span class="auth-slot" data-guest>
+      <button class="primary" type="button" onclick="showLogin()">Login</button>
+    </span>
+    <span class="auth-slot hidden" data-user>
+      <span class="user-chip" data-username></span>
+      <button class="primary" type="button" data-logout>Logout</button>
+    </span>
+
+    <button class="btn menu-btn" onclick="toggleMenu()">☰</button>
+  </div>
+</header>
+
+<main id="home">
+  <div class="badge">✦ YOUR NEXT DISCOVERY STARTS HERE</div>
+  <h1>KHOJ<br><span class="gradient">Discover Everything.</span></h1>
+  <p class="subtitle">
+    Search the web, discover images and videos, explore the latest news,
+    and find useful information — all in one place.
+  </p>
+
+  <div class="search-wrap">
+    <form class="search-shell" id="searchForm">
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input id="searchInput" type="search" autocomplete="off"
+          placeholder="What would you like to discover?" required>
+        <button class="mic" id="micBtn" type="button" aria-label="Voice search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></button>
+        <button class="primary" type="submit">Search ↗</button>
+      </div>
+    </form>
+    <div class="sug hidden" id="sugBox"></div>
+  </div>
+
+  <div class="categories">
+    <button class="category active" data-type="web"><svg class="ci" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>Web</button>
+    <button class="category" data-type="ai"><svg class="ci" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>AI Answers</button>
+    <button class="category" data-type="images"><svg class="ci" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>Images</button>
+    <button class="category" data-type="videos"><svg class="ci" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>Videos</button>
+    <button class="category" data-type="news"><svg class="ci" viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>News</button>
+    <button class="category" data-type="education"><svg class="ci" viewBox="0 0 24 24"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>Education</button>
+  </div>
+
+  <div class="history hidden" id="historyBox"></div>
+
+  <p class="hint">Popular searches: AI Tools · Technology · Science · Education</p>
+
+  <section id="results" aria-live="polite">
+    <h2 id="resultTitle">Search Results</h2>
+    <p id="resultText"></p>
+    <div id="resultList"></div>
+    <button class="primary hidden" id="moreBtn" type="button">Show more</button>
+    <a id="resultLink" class="result-link" href="#" target="_blank" rel="noopener noreferrer">
+      Open search results ↗
+    </a>
+  </section>
+
+  <section id="explore">
+    <h2 class="section-title">Explore KHOJ</h2>
+    <p class="section-subtitle">Discover more of what matters to you.</p>
+    <div class="cards">
+      <article class="card">
+        <div class="ico c1"><svg class="" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div><h3>Web Search</h3>
+        <p>Discover websites and useful information from across the internet.</p>
+        <button onclick="chooseCategory('web')">Explore Web ↗</button>
+      </article>
+      <article class="card">
+        <div class="ico c2"><svg class="" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></div><h3>AI Answers</h3>
+        <p>Find information for your questions with AI search services.</p>
+        <button onclick="chooseCategory('ai')">Explore AI ↗</button>
+      </article>
+      <article class="card">
+        <div class="ico c3"><svg class="" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg></div><h3>Image Search</h3>
+        <p>Explore pictures related to your favorite topics.</p>
+        <button onclick="chooseCategory('images')">Explore Images ↗</button>
+      </article>
+      <article class="card">
+        <div class="ico c4"><svg class="" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></div><h3>Video Search</h3>
+        <p>Discover tutorials, lessons and entertainment on YouTube.</p>
+        <button onclick="chooseCategory('videos')">Explore Videos ↗</button>
+      </article>
+      <article class="card">
+        <div class="ico c5"><svg class="" viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg></div><h3>News Search</h3>
+        <p>Explore news and current events from across the world.</p>
+        <button onclick="chooseCategory('news')">Explore News ↗</button>
+      </article>
+      <article class="card">
+        <div class="ico c6"><svg class="" viewBox="0 0 24 24"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></div><h3>Education</h3>
+        <p>Find courses, study notes and learning resources.</p>
+        <button onclick="chooseCategory('education')">Start Learning ↗</button>
+      </article>
+    </div>
+  </section>
+
+  <section class="ai-section" id="ai">
+    <div class="ico c2"><svg class="" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></div>
+    <h2>Discover More with KHOJ AI</h2>
+    <p>Explore ideas and questions. A real AI service must be connected before KHOJ can generate its own answers.</p>
+    <button class="primary" onclick="chooseCategory('ai')">Try AI Search ↗</button>
+  </section>
+</main>
+
+<footer id="about">
+  <div class="logo">⌕ KHOJ</div>
+  <p>Discover Everything. Search Beyond Limits.</p>
+  <div>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div><button class="chip inst hidden" id="installBtn" type="button"><svg class="ci" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Install app</button></div>
+  <p>© 2026 KHOJ. All rights reserved.</p>
+</footer>
+
+<!-- ================= VOICE SEARCH OVERLAY ================= -->
+<div class="vo" id="voiceOverlay" role="dialog" aria-modal="true" aria-label="Voice search">
+  <button type="button" class="vo-close" id="voClose" aria-label="Close">×</button>
+  <div class="vo-orb"><canvas id="voCanvas"></canvas></div>
+  <div class="vo-status" id="voStatus"></div>
+  <form class="vo-pill" id="voForm">
+    <input id="voInput" type="text" autocomplete="off">
+    <button type="button" class="vo-mic" id="voMic" aria-label="Microphone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></button>
+  </form>
+</div>
+
+<!-- ================= LOGIN MODAL ================= -->
+<div class="a-modal" id="authModal" role="dialog" aria-modal="true">
+  <div class="a-box">
+    <button type="button" class="a-close" id="aClose" aria-label="Close">×</button>
+
+    <!-- Login -->
+    <section id="loginView">
+      <h2>Welcome Back</h2>
+      <p class="a-sub">Sign in to continue</p>
+      <div class="a-msg" id="loginMsg"></div>
+      <form id="loginForm" novalidate>
+        <div class="a-field">
+          <input type="email" id="loginEmail" placeholder=" " autocomplete="email" required>
+          <label for="loginEmail">👤 Email Address</label>
+        </div>
+        <div class="a-field">
+          <input type="password" id="loginPass" placeholder=" " autocomplete="current-password" required>
+          <label for="loginPass">🔒 Password</label>
+          <button type="button" class="a-eye" data-target="loginPass">Show</button>
+        </div>
+        <button type="button" class="a-link" data-go="forgotView">Forgot Password?</button>
+        <button type="submit" class="a-btn">Sign In &nbsp;→</button>
+        <div class="a-or">OR CONTINUE WITH</div>
+        <button type="button" class="a-btn a-google" id="googleBtn"><b>G</b> Sign in with Google</button>
+      </form>
+      <p class="a-switch">Don't have an account? <a data-go="signupView">Sign Up</a></p>
+    </section>
+
+    <!-- Signup -->
+    <section id="signupView" class="hidden">
+      <h2>Create Account</h2>
+      <p class="a-sub">Sign up to get started</p>
+      <div class="a-msg" id="signupMsg"></div>
+      <form id="signupForm" novalidate>
+        <div class="a-field">
+          <input type="text" id="signName" placeholder=" " autocomplete="name" required>
+          <label for="signName">🙂 Full Name</label>
+        </div>
+        <div class="a-field">
+          <input type="email" id="signEmail" placeholder=" " autocomplete="email" required>
+          <label for="signEmail">👤 Email Address</label>
+        </div>
+        <div class="a-field">
+          <input type="password" id="signPass" placeholder=" " autocomplete="new-password" required>
+          <label for="signPass">🔒 Password (min 6)</label>
+          <button type="button" class="a-eye" data-target="signPass">Show</button>
+        </div>
+        <div class="a-field">
+          <input type="password" id="signPass2" placeholder=" " autocomplete="new-password" required>
+          <label for="signPass2">🔒 Confirm Password</label>
+        </div>
+        <button type="submit" class="a-btn">Create Account</button>
+      </form>
+      <p class="a-switch">Already have an account? <a data-go="loginView">Sign In</a></p>
+    </section>
+
+    <!-- Forgot -->
+    <section id="forgotView" class="hidden">
+      <h2>Reset Password</h2>
+      <p class="a-sub">We will email you a reset link</p>
+      <div class="a-msg" id="forgotMsg"></div>
+      <form id="forgotForm" novalidate>
+        <div class="a-field">
+          <input type="email" id="forgotEmail" placeholder=" " autocomplete="email" required>
+          <label for="forgotEmail">👤 Email Address</label>
+        </div>
+        <button type="submit" class="a-btn">Send Reset Link</button>
+      </form>
+      <button type="button" class="a-btn a-ghost" data-go="loginView">← Back to Sign In</button>
+    </section>
+  </div>
+</div>
+
+<!-- ================= SEARCH SCRIPT (unchanged) ================= -->
+<script>
+/* ===== Search results inside KHOJ (Google Programmable Search) =====
+   Fill these two values (steps are in the chat). While they say YOUR_...,
+   KHOJ opens the results on Google instead. */
+const CSE_KEY = "YOUR_SEARCH_API_KEY";
+const CSE_CX = "YOUR_SEARCH_ENGINE_ID";
+const cseReady = !CSE_KEY.startsWith("YOUR_") && !CSE_CX.startsWith("YOUR_");
+
+let currentCategory = "web";
+const input = document.getElementById("searchInput");
+
+function chooseCategory(type){
+  currentCategory = type;
+  document.querySelectorAll(".category").forEach(button=>{
+    button.classList.toggle("active",button.dataset.type===type);
+  });
+  input.focus();
+  document.getElementById("home").scrollIntoView({behavior:"smooth"});
+}
+
+document.querySelectorAll(".category").forEach(button=>{
+  button.addEventListener("click",()=>chooseCategory(button.dataset.type));
+});
+
+document.getElementById("searchForm").addEventListener("submit",function(event){
+  event.preventDefault();
+  const query = input.value.trim();
+  if(!query)return;
+
+  const q = encodeURIComponent(query);
+  let url = "";
+  let message = "";
+
+  switch(currentCategory){
+    case "images":
+      url = "https://www.google.com/search?tbm=isch&q="+q;
+      break;
+    case "videos":
+      url = "https://www.youtube.com/results?search_query="+q;
+      break;
+    case "news":
+      url = "https://news.google.com/search?q="+q;
+      break;
+    case "education":
+      url = "https://www.google.com/search?q="+q+"+education+study+resources";
+      break;
+    case "ai":
+      url = "https://www.google.com/search?q="+q+"+AI+answers";
+      message = "KHOJ does not have its own AI connected yet. These are external search results related to AI answers.";
+      break;
+    default:
+      url = "https://www.google.com/search?q="+q;
+  }
+
+  document.getElementById("resultTitle").textContent = (lang === "hi" ? "खोज: " : "Search: ") + query;
+  saveHistory(query);
+  document.getElementById("resultText").textContent =
+    message || "Your search is ready. Open the external search provider to see real results.";
+  document.getElementById("resultLink").href = url;
+  applyLang();
+  document.getElementById("results").style.display = "block";
+  document.getElementById("results").scrollIntoView({behavior:"smooth",block:"start"});
+
+  document.getElementById("resultList").innerHTML = "";
+  document.getElementById("moreBtn").classList.add("hidden");
+  if (cseReady && ["web","ai","education","images"].includes(currentCategory)) {
+    runCse(query, currentCategory, message, 1);
+    return;
+  }
+
+  // Automatically open the selected search provider.
+  window.open(url,"_blank","noopener,noreferrer");
+});
+
+/* ---------- Theme toggle ---------- */
+const themeToggle = document.getElementById("themeToggle");
+function setTheme(light){
+  document.body.classList.toggle("light", light);
+  themeToggle.setAttribute("aria-pressed", String(!light));
+  try { localStorage.setItem("khoj_theme", light ? "light" : "dark"); } catch(e){}
+}
+themeToggle.addEventListener("click", () => setTheme(!document.body.classList.contains("light")));
+themeToggle.addEventListener("keydown", e => {
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); themeToggle.click(); }
+});
+try { if (localStorage.getItem("khoj_theme") === "light") setTheme(true); } catch(e){}
+
+/* ---------- Hindi / English ---------- */
+const HI = {
+"Home":"होम","Install app":"ऐप इंस्टॉल करें","Web":"वेब","Images":"तस्वीरें","Videos":"वीडियो","News":"खबरें","Explore":"एक्सप्लोर","AI Search":"AI सर्च","About":"परिचय","Login":"लॉगिन","Logout":"लॉगआउट",
+"✦ YOUR NEXT DISCOVERY STARTS HERE":"✦ आपकी अगली खोज यहीं से शुरू होती है",
+"Discover Everything.":"सब कुछ खोजिए।",
+"Search the web, discover images and videos, explore the latest news, and find useful information — all in one place.":"वेब खोजिए, तस्वीरें और वीडियो देखिए, ताज़ा खबरें पढ़िए और काम की जानकारी पाइए — सब एक ही जगह।",
+"Search ↗":"खोजें ↗",
+"🌐 Web":"🌐 वेब","✦ AI Answers":"✦ AI जवाब","▧ Images":"▧ तस्वीरें","▶ Videos":"▶ वीडियो","▤ News":"▤ खबरें","📚 Education":"📚 शिक्षा",
+"Popular searches: AI Tools · Technology · Science · Education":"लोकप्रिय खोज: AI टूल्स · टेक्नोलॉजी · विज्ञान · शिक्षा",
+"Explore KHOJ":"KHOJ को जानिए","Discover more of what matters to you.":"वह सब खोजिए जो आपके लिए मायने रखता है।",
+"Web Search":"वेब सर्च","Discover websites and useful information from across the internet.":"इंटरनेट भर की वेबसाइटें और काम की जानकारी खोजिए।","Explore Web ↗":"वेब खोजिए ↗",
+"AI Answers":"AI जवाब","Find information for your questions with AI search services.":"AI सर्च सेवाओं से अपने सवालों की जानकारी पाइए।","Explore AI ↗":"AI खोजिए ↗",
+"Image Search":"तस्वीर खोज","Explore pictures related to your favorite topics.":"अपने पसंदीदा विषयों की तस्वीरें देखिए।","Explore Images ↗":"तस्वीरें खोजिए ↗",
+"Video Search":"वीडियो खोज","Discover tutorials, lessons and entertainment on YouTube.":"YouTube पर ट्यूटोरियल, पाठ और मनोरंजन खोजिए।","Explore Videos ↗":"वीडियो खोजिए ↗",
+"News Search":"खबर खोज","Explore news and current events from across the world.":"दुनिया भर की खबरें और ताज़ा घटनाएँ पढ़िए।","Explore News ↗":"खबरें खोजिए ↗",
+"Education":"शिक्षा","Find courses, study notes and learning resources.":"कोर्स, स्टडी नोट्स और सीखने की सामग्री खोजिए।","Start Learning ↗":"सीखना शुरू करें ↗",
+"Discover More with KHOJ AI":"KHOJ AI से और खोजिए",
+"Explore ideas and questions. A real AI service must be connected before KHOJ can generate its own answers.":"विचारों और सवालों को खोजिए। KHOJ अपने जवाब तभी बना पाएगा जब उससे कोई असली AI सेवा जोड़ी जाएगी।",
+"Try AI Search ↗":"AI सर्च आज़माइए ↗",
+"Discover Everything. Search Beyond Limits.":"सब कुछ खोजिए। सीमाओं से आगे खोजिए।",
+"Privacy Policy":"गोपनीयता नीति","Terms":"शर्तें","Contact":"संपर्क",
+"© 2026 KHOJ. All rights reserved.":"© 2026 KHOJ. सर्वाधिकार सुरक्षित।",
+"Search Results":"खोज परिणाम","Open search results ↗":"खोज परिणाम खोलें ↗",
+"Your search is ready. Open the external search provider to see real results.":"आपकी खोज तैयार है। असली नतीजे देखने के लिए बाहरी सर्च साइट खोलिए।",
+"KHOJ does not have its own AI connected yet. These are external search results related to AI answers.":"KHOJ में अभी अपना AI नहीं जुड़ा है। ये AI जवाबों से जुड़े बाहरी खोज परिणाम हैं।",
+"Recent searches":"हाल की खोजें","Clear":"मिटाएँ",
+"Welcome Back":"वापसी पर स्वागत है","Sign in to continue":"जारी रखने के लिए साइन इन कीजिए",
+"👤 Email Address":"👤 ईमेल पता","🔒 Password":"🔒 पासवर्ड","Show":"दिखाएँ","Hide":"छिपाएँ",
+"Forgot Password?":"पासवर्ड भूल गए?","Sign In →":"साइन इन →","OR CONTINUE WITH":"या इससे जारी रखें",
+"Sign in with Google":"Google से साइन इन करें","Don't have an account?":"खाता नहीं है?","Sign Up":"साइन अप",
+"Create Account":"खाता बनाएँ","Sign up to get started":"शुरू करने के लिए साइन अप कीजिए",
+"🙂 Full Name":"🙂 पूरा नाम","🔒 Password (min 6)":"🔒 पासवर्ड (कम से कम 6)","🔒 Confirm Password":"🔒 पासवर्ड दोबारा लिखें",
+"Already have an account?":"पहले से खाता है?","Sign In":"साइन इन","Reset Password":"पासवर्ड रीसेट",
+"We will email you a reset link":"हम आपको रीसेट लिंक ईमेल करेंगे","Send Reset Link":"रीसेट लिंक भेजें",
+"← Back to Sign In":"← साइन इन पर वापस"
+};
+const PH = {
+  en: "What would you like to discover?",
+  hi: "आप क्या खोजना चाहते हैं?"
+};
+let lang = "en";
+try { lang = localStorage.getItem("khoj_lang") === "hi" ? "hi" : "en"; } catch(e){}
+window.khojLang = lang;
+const origText = new WeakMap();
+const normText = t => t.replace(/\s+/g, " ").trim();
+
+function applyLang(){
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode(n){
+      const tag = n.parentNode && n.parentNode.nodeName;
+      if (tag === "SCRIPT" || tag === "STYLE" || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n => {
+    if (!origText.has(n)) origText.set(n, n.nodeValue);
+    const o = origText.get(n);
+    const key = normText(o);
+    if (lang === "hi" && HI[key]) {
+      n.nodeValue = o.match(/^\s*/)[0] + HI[key] + o.match(/\s*$/)[0];
+    } else if (n.nodeValue !== o) {
+      n.nodeValue = o;
+    }
+  });
+  input.placeholder = PH[lang];
+  document.documentElement.lang = lang;
+  document.getElementById("langBtn").classList.toggle("hi", lang === "hi");
+}
+document.getElementById("langBtn").addEventListener("click", () => {
+  lang = lang === "hi" ? "en" : "hi";
+  window.khojLang = lang;
+  try { localStorage.setItem("khoj_lang", lang); } catch(e){}
+  applyLang();
+  window.dispatchEvent(new Event("langchange"));
+});
+
+/* ---------- Search history (signed-in users, saved in this browser) ---------- */
+const historyBox = document.getElementById("historyBox");
+const searchForm = document.getElementById("searchForm");
+function submitSearch(){
+  if (searchForm.requestSubmit) searchForm.requestSubmit();
+  else searchForm.dispatchEvent(new Event("submit", { cancelable: true }));
+}
+function histKey(){ return window.khojUser ? "khoj_hist_" + window.khojUser.uid : null; }
+function getHistory(){
+  const k = histKey();
+  if (!k) return [];
+  try { return JSON.parse(localStorage.getItem(k) || "[]"); } catch(e){ return []; }
+}
+function setHistory(list){
+  const k = histKey();
+  if (!k) return;
+  try { localStorage.setItem(k, JSON.stringify(list)); } catch(e){}
+}
+function saveHistory(q){
+  if (!histKey()) return;
+  let h = getHistory().filter(x => x.toLowerCase() !== q.toLowerCase());
+  h.unshift(q);
+  setHistory(h.slice(0, 10));
+  renderHistory();
+}
+function renderHistory(){
+  const h = getHistory();
+  historyBox.innerHTML = "";
+  historyBox.classList.toggle("hidden", !h.length);
+  if (!h.length) return;
+  const title = document.createElement("span");
+  title.className = "hist-title";
+  title.textContent = "Recent searches";
+  historyBox.appendChild(title);
+  h.slice(0, 6).forEach(q => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.textContent = q;
+    b.addEventListener("click", () => { input.value = q; submitSearch(); });
+    historyBox.appendChild(b);
+  });
+  const clr = document.createElement("button");
+  clr.type = "button";
+  clr.className = "chip-clear";
+  clr.textContent = "Clear";
+  clr.addEventListener("click", () => { setHistory([]); renderHistory(); });
+  historyBox.appendChild(clr);
+  applyLang();
+}
+window.addEventListener("authchange", () => { renderHistory(); hideSug(); });
+
+/* ---------- Search suggestions ---------- */
+const sugBox = document.getElementById("sugBox");
+const FALLBACK = ["AI tools for students","Technology news","Science experiments","Online education courses",
+                  "Latest news today","Hindi songs","Cricket live score","Weather today"];
+let sugTimer = null, sugItems = [], sugIdx = -1;
+
+function hideSug(){ sugBox.classList.add("hidden"); sugBox.innerHTML = ""; sugItems = []; sugIdx = -1; }
+function renderSug(list, headText){
+  sugBox.innerHTML = "";
+  sugItems = list;
+  sugIdx = -1;
+  if (!list.length) { sugBox.classList.add("hidden"); return; }
+  if (headText) {
+    const hd = document.createElement("div");
+    hd.className = "sug-head";
+    hd.textContent = headText;
+    sugBox.appendChild(hd);
+  }
+  list.forEach(q => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "sug-item";
+    const ico = document.createElement("span");
+    ico.className = "sug-ico";
+    ico.textContent = "⌕";
+    const tx = document.createElement("span");
+    tx.textContent = q;
+    b.appendChild(ico);
+    b.appendChild(tx);
+    b.addEventListener("click", () => { input.value = q; hideSug(); submitSearch(); });
+    sugBox.appendChild(b);
+  });
+  sugBox.classList.remove("hidden");
+}
+async function fetchSug(q){
+  let list = [];
+  try {
+    const ds = currentCategory === "videos" ? "&ds=yt" : "";
+    const r = await fetch("https://suggestqueries.google.com/complete/search?client=firefox" + ds +
+      "&hl=" + (lang === "hi" ? "hi" : "en") + "&q=" + encodeURIComponent(q));
+    const d = await r.json();
+    list = Array.isArray(d[1]) ? d[1] : [];
+  } catch(e){}
+  const low = q.toLowerCase();
+  const mine = getHistory().filter(x => x.toLowerCase().includes(low));
+  let all = [...new Set([...mine, ...list])];
+  if (!all.length) all = FALLBACK.filter(x => x.toLowerCase().includes(low));
+  if (input.value.trim() !== q) return;
+  renderSug(all.slice(0, 7));
+}
+input.addEventListener("input", () => {
+  clearTimeout(sugTimer);
+  const q = input.value.trim();
+  if (!q) { showRecentSug(); return; }
+  sugTimer = setTimeout(() => fetchSug(q), 250);
+});
+function showRecentSug(){
+  const h = getHistory();
+  if (h.length) renderSug(h.slice(0, 6), lang === "hi" ? "हाल की खोजें" : "Recent searches");
+  else hideSug();
+}
+input.addEventListener("click", () => { if (!input.value.trim()) showRecentSug(); });
+input.addEventListener("keydown", e => {
+  const items = sugBox.querySelectorAll(".sug-item");
+  if (e.key === "Escape") { hideSug(); return; }
+  if (!items.length) return;
+  if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+    e.preventDefault();
+    sugIdx = e.key === "ArrowDown" ? (sugIdx + 1) % items.length : (sugIdx - 1 + items.length) % items.length;
+    items.forEach((el, i) => el.classList.toggle("active", i === sugIdx));
+  } else if (e.key === "Enter" && sugIdx >= 0) {
+    input.value = sugItems[sugIdx];
+  }
+});
+searchForm.addEventListener("submit", hideSug);
+document.addEventListener("click", e => { if (!e.target.closest(".search-wrap")) hideSug(); });
+
+/* ---------- Voice search (orb overlay) ---------- */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+const micBtn = document.getElementById("micBtn");
+const voEl = document.getElementById("voiceOverlay");
+const voInput = document.getElementById("voInput");
+const voMic = document.getElementById("voMic");
+const voStatus = document.getElementById("voStatus");
+const voTxt = {
+  en: { ph: "Search anything…", idle: "Tap the mic and speak", on: "Listening… speak now", deny: "Please allow microphone access." },
+  hi: { ph: "कुछ भी खोजिए…", idle: "माइक दबाइए और बोलिए", on: "सुन रहा हूँ… बोलिए", deny: "कृपया माइक की अनुमति दीजिए।" }
+};
+
+/* WebGL orb: same shader as the 21st.dev "Voice Powered Orb", drawn with plain WebGL */
+const orb = (function(){
+  const canvas = document.getElementById("voCanvas");
+  let gl = null, prog = null, U = {}, raf = 0, running = false, rot = 0, last = 0, getLevel = () => 0;
+  const VERT = "attribute vec2 position; varying vec2 vUv; void main(){ vUv = position * 0.5 + 0.5; gl_Position = vec4(position, 0.0, 1.0); }";
+  const FRAG = `
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+uniform float iTime; uniform vec3 iResolution; uniform float hue; uniform float hover; uniform float rot; uniform float hoverIntensity;
+varying vec2 vUv;
+vec3 rgb2yiq(vec3 c){ float y=dot(c,vec3(0.299,0.587,0.114)); float i=dot(c,vec3(0.596,-0.274,-0.322)); float q=dot(c,vec3(0.211,-0.523,0.312)); return vec3(y,i,q); }
+vec3 yiq2rgb(vec3 c){ float r=c.x+0.956*c.y+0.621*c.z; float g=c.x-0.272*c.y-0.647*c.z; float b=c.x-1.106*c.y+1.703*c.z; return vec3(r,g,b); }
+vec3 adjustHue(vec3 color,float hueDeg){ float hueRad=hueDeg*3.14159265/180.0; vec3 yiq=rgb2yiq(color); float cosA=cos(hueRad); float sinA=sin(hueRad); float i=yiq.y*cosA-yiq.z*sinA; float q=yiq.y*sinA+yiq.z*cosA; yiq.y=i; yiq.z=q; return yiq2rgb(yiq); }
+vec3 hash33(vec3 p3){ p3=fract(p3*vec3(0.1031,0.11369,0.13787)); p3+=dot(p3,p3.yxz+19.19); return -1.0+2.0*fract(vec3(p3.x+p3.y,p3.x+p3.z,p3.y+p3.z)*p3.zyx); }
+float snoise3(vec3 p){
+  const float K1=0.333333333; const float K2=0.166666667;
+  vec3 i=floor(p+(p.x+p.y+p.z)*K1);
+  vec3 d0=p-(i-(i.x+i.y+i.z)*K2);
+  vec3 e=step(vec3(0.0),d0-d0.yzx);
+  vec3 i1=e*(1.0-e.zxy); vec3 i2=1.0-e.zxy*(1.0-e);
+  vec3 d1=d0-(i1-K2); vec3 d2=d0-(i2-K1); vec3 d3=d0-0.5;
+  vec4 h=max(0.6-vec4(dot(d0,d0),dot(d1,d1),dot(d2,d2),dot(d3,d3)),0.0);
+  vec4 n=h*h*h*h*vec4(dot(d0,hash33(i)),dot(d1,hash33(i+i1)),dot(d2,hash33(i+i2)),dot(d3,hash33(i+1.0)));
+  return dot(vec4(31.316),n);
+}
+vec4 extractAlpha(vec3 colorIn){ float a=max(max(colorIn.r,colorIn.g),colorIn.b); return vec4(colorIn.rgb/(a+1e-5),a); }
+const vec3 baseColor1=vec3(1.0,0.42,0.08);
+const vec3 baseColor2=vec3(0.96,0.40,0.70);
+const vec3 baseColor3=vec3(0.22,0.07,0.48);
+const float innerRadius=0.6; const float noiseScale=0.65;
+float light1(float intensity,float attenuation,float dist){ return intensity/(1.0+dist*attenuation); }
+float light2(float intensity,float attenuation,float dist){ return intensity/(1.0+dist*dist*attenuation); }
+vec4 draw(vec2 uv){
+  vec3 color1=adjustHue(baseColor1,hue); vec3 color2=adjustHue(baseColor2,hue); vec3 color3=adjustHue(baseColor3,hue);
+  float ang=atan(uv.y,uv.x); float len=length(uv); float invLen=len>0.0?1.0/len:0.0;
+  float n0=snoise3(vec3(uv*noiseScale,iTime*0.5))*0.5+0.5;
+  float r0=mix(mix(innerRadius,1.0,0.4),mix(innerRadius,1.0,0.6),n0);
+  float d0=distance(uv,(r0*invLen)*uv);
+  float v0=light1(1.0,10.0,d0);
+  v0*=smoothstep(r0*1.05,r0,len);
+  float cl=cos(ang+iTime*2.0)*0.5+0.5;
+  float a=iTime*-1.0;
+  vec2 pos=vec2(cos(a),sin(a))*r0;
+  float d=distance(uv,pos);
+  float v1=light2(1.5,5.0,d); v1*=light1(1.0,50.0,d0);
+  float v2=smoothstep(1.0,mix(innerRadius,1.0,n0*0.5),len);
+  float v3=smoothstep(innerRadius,mix(innerRadius,1.0,0.5),len);
+  vec3 col=mix(color1,color2,cl); col=mix(color3,col,v0); col=(col+v1)*v2*v3; col=clamp(col,0.0,1.0);
+  return extractAlpha(col);
+}
+vec4 mainImage(vec2 fragCoord){
+  vec2 center=iResolution.xy*0.5; float size=min(iResolution.x,iResolution.y);
+  vec2 uv=(fragCoord-center)/size*2.0;
+  float angle=rot; float s=sin(angle); float c=cos(angle);
+  uv=vec2(c*uv.x-s*uv.y,s*uv.x+c*uv.y);
+  uv.x+=hover*hoverIntensity*0.1*sin(uv.y*10.0+iTime);
+  uv.y+=hover*hoverIntensity*0.1*sin(uv.x*10.0+iTime);
+  return draw(uv);
+}
+void main(){ vec2 fragCoord=vUv*iResolution.xy; vec4 col=mainImage(fragCoord); gl_FragColor=vec4(col.rgb*col.a,col.a); }`;
+
+  function shader(type, src){
+    const sh = gl.createShader(type);
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(sh)); return null; }
+    return sh;
+  }
+  function init(){
+    if (prog) return true;
+    try { gl = canvas.getContext("webgl", { alpha: true, premultipliedAlpha: false, antialias: true }); } catch(e){}
+    if (!gl) return false;
+    const vs = shader(gl.VERTEX_SHADER, VERT), fs = shader(gl.FRAGMENT_SHADER, FRAG);
+    if (!vs || !fs) return false;
+    prog = gl.createProgram();
+    gl.attachShader(prog, vs); gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.error(gl.getProgramInfoLog(prog)); prog = null; return false; }
+    gl.useProgram(prog);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+    const pos = gl.getAttribLocation(prog, "position");
+    gl.enableVertexAttribArray(pos);
+    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+    ["iTime","iResolution","hue","hover","rot","hoverIntensity"].forEach(n => U[n] = gl.getUniformLocation(prog, n));
+    gl.clearColor(0, 0, 0, 0);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    return true;
+  }
+  function resize(){
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    if (!w || !h) return;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  function frame(t){
+    if (!running) return;
+    raf = requestAnimationFrame(frame);
+    const dt = Math.min((t - last) * 0.001, 0.1);
+    last = t;
+    const lv = getLevel();
+    if (lv > 0.05) rot += dt * (0.3 + lv * 1.2 * 2.0);
+    gl.uniform1f(U.iTime, t * 0.001);
+    gl.uniform3f(U.iResolution, canvas.width, canvas.height, canvas.width / canvas.height);
+    gl.uniform1f(U.hue, 0);
+    gl.uniform1f(U.hover, Math.min(lv * 2.0, 1.0));
+    gl.uniform1f(U.hoverIntensity, Math.min(lv * 0.8 * 0.8, 0.8));
+    gl.uniform1f(U.rot, rot);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+  return {
+    start(levelFn){
+      if (!init()) { canvas.style.display = "none"; return; }
+      canvas.style.display = "block";
+      getLevel = levelFn;
+      resize();
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(frame);
+    },
+    stop(){ running = false; cancelAnimationFrame(raf); }
+  };
+})();
+
+/* microphone level (drives the orb) */
+let vStream = null, vCtx = null, vAn = null, vData = null, vSpeaking = false, vSim = 0;
+async function startLevel(){
+  try {
+    vStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+    vCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (vCtx.state === "suspended") await vCtx.resume();
+    vAn = vCtx.createAnalyser();
+    vAn.fftSize = 512;
+    vAn.smoothingTimeConstant = 0.3;
+    vCtx.createMediaStreamSource(vStream).connect(vAn);
+    vData = new Uint8Array(vAn.frequencyBinCount);
+  } catch(e){ stopLevel(); }
+}
+function stopLevel(){
+  if (vStream) vStream.getTracks().forEach(t => t.stop());
+  vStream = null;
+  try { if (vCtx && vCtx.state !== "closed") vCtx.close(); } catch(e){}
+  vCtx = null; vAn = null; vData = null;
+}
+function voLevel(){
+  let l = 0;
+  if (vAn && vData) {
+    vAn.getByteFrequencyData(vData);
+    let sum = 0;
+    for (let i = 0; i < vData.length; i++) { const v = vData[i] / 255; sum += v * v; }
+    l = Math.min(Math.sqrt(sum / vData.length) * 1.5 * 3.0, 1);
+  }
+  const target = vSpeaking ? 0.35 + 0.25 * Math.sin(performance.now() * 0.012) : 0;
+  vSim += (target - vSim) * 0.15;
+  return Math.max(l, vSim);
+}
+
+/* speech recognition */
+let vRec = null, vListening = false, vText = "";
+function voState(){
+  const T = voTxt[lang];
+  voMic.classList.toggle("on", vListening);
+  voStatus.textContent = vListening ? T.on : T.idle;
+}
+function startListen(){
+  if (!SR || vListening) return;
+  vText = "";
+  voInput.value = "";
+  vRec = new SR();
+  vRec.lang = lang === "hi" ? "hi-IN" : "en-IN";
+  vRec.interimResults = true;
+  vRec.continuous = false;
+  vRec.maxAlternatives = 1;
+  vRec.onstart = () => { vListening = true; voState(); setTimeout(() => { if (vListening && !vStream) startLevel(); }, 350); };
+  vRec.onspeechstart = () => { vSpeaking = true; };
+  vRec.onspeechend = () => { vSpeaking = false; };
+  vRec.onresult = e => {
+    let txt = "";
+    for (let i = 0; i < e.results.length; i++) txt += e.results[i][0].transcript;
+    vText = txt.trim();
+    voInput.value = vText;
+    vSpeaking = true;
+  };
+  vRec.onerror = e => {
+    if (e.error === "not-allowed" || e.error === "service-not-allowed") alert(voTxt[lang].deny);
+  };
+  vRec.onend = () => {
+    vListening = false; vSpeaking = false; voState();
+    const t = vText;
+    vText = "";
+    if (t && voEl.classList.contains("open")) { closeVoice(); input.value = t; submitSearch(); }
+  };
+  try { vRec.start(); } catch(e){}
+}
+function openVoice(){
+  voEl.classList.add("open");
+  document.body.style.overflow = "hidden";
+  voInput.placeholder = voTxt[lang].ph;
+  voInput.value = "";
+  voState();
+  orb.start(voLevel);
+  startListen();
+}
+function closeVoice(){
+  vText = "";
+  voEl.classList.remove("open");
+  document.body.style.overflow = "";
+  if (vRec) { try { vRec.abort(); } catch(e){} }
+  vListening = false; vSpeaking = false; vSim = 0;
+  stopLevel();
+  orb.stop();
+}
+if (!SR) {
+  micBtn.classList.add("hidden");
+} else {
+  micBtn.addEventListener("click", openVoice);
+  voMic.addEventListener("click", () => {
+    if (vListening && vRec) { vRec.stop(); } else { startListen(); }
+  });
+  document.getElementById("voClose").addEventListener("click", closeVoice);
+  document.getElementById("voForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const t = voInput.value.trim();
+    if (!t) return;
+    closeVoice();
+    input.value = t;
+    submitSearch();
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && voEl.classList.contains("open")) closeVoice(); });
+}
+
+applyLang();
+
+/* ---------- Results inside the site ---------- */
+const safeUrl = u => /^https?:\/\//i.test(u || "") ? u : "#";
+let cseQuery = "", cseCat = "web", cseNote = "";
+
+async function runCse(query, cat, note, start){
+  cseQuery = query; cseCat = cat; cseNote = note;
+  const list = document.getElementById("resultList");
+  const more = document.getElementById("moreBtn");
+  const txt = document.getElementById("resultText");
+  const hi = lang === "hi";
+  if (start === 1) { list.innerHTML = ""; list.className = cat === "images" ? "img-grid" : ""; }
+  more.classList.add("hidden");
+  txt.textContent = hi ? "खोज रहा हूँ…" : "Searching…";
+
+  let q = query;
+  if (cat === "education") q += " education study resources";
+  const params = new URLSearchParams({ key: CSE_KEY, cx: CSE_CX, q: q, start: String(start), hl: hi ? "hi" : "en", safe: "active" });
+  if (cat === "images") params.set("searchType", "image");
+
+  try {
+    const r = await fetch("https://www.googleapis.com/customsearch/v1?" + params.toString());
+    const d = await r.json();
+    if (!r.ok) throw new Error((d.error && d.error.message) || r.status);
+
+    const items = d.items || [];
+    const total = d.searchInformation && d.searchInformation.formattedTotalResults;
+    let line = items.length || start > 1
+      ? (total ? (hi ? "लगभग " + total + " नतीजे" : "About " + total + " results") : "")
+      : (hi ? "कोई नतीजा नहीं मिला।" : "No results found.");
+    txt.textContent = (note ? note + " " : "") + line;
+
+    items.forEach(it => {
+      if (cat === "images") {
+        const a = document.createElement("a");
+        a.className = "img-card";
+        a.href = safeUrl((it.image && it.image.contextLink) || it.link);
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        const im = document.createElement("img");
+        im.loading = "lazy";
+        im.alt = it.title || "";
+        im.src = safeUrl((it.image && it.image.thumbnailLink) || it.link);
+        const cap = document.createElement("span");
+        cap.textContent = it.title || "";
+        a.appendChild(im);
+        a.appendChild(cap);
+        list.appendChild(a);
+      } else {
+        const box = document.createElement("div");
+        box.className = "res-item";
+        const u = document.createElement("div");
+        u.className = "res-url";
+        u.textContent = it.displayLink || "";
+        const t = document.createElement("a");
+        t.className = "res-title";
+        t.href = safeUrl(it.link);
+        t.target = "_blank";
+        t.rel = "noopener noreferrer";
+        t.textContent = it.title || it.link;
+        const sn = document.createElement("div");
+        sn.className = "res-snip";
+        sn.textContent = it.snippet || "";
+        box.appendChild(u);
+        box.appendChild(t);
+        box.appendChild(sn);
+        list.appendChild(box);
+      }
+    });
+
+    const next = d.queries && d.queries.nextPage && d.queries.nextPage[0];
+    if (next && next.startIndex && next.startIndex <= 91) {
+      more.textContent = hi ? "और दिखाइए" : "Show more";
+      more.dataset.start = String(next.startIndex);
+      more.classList.remove("hidden");
+    }
+  } catch (err) {
+    console.error("Search failed:", err);
+    txt.textContent = hi
+      ? "नतीजे यहाँ नहीं आ पाए (आज की मुफ़्त सीमा पूरी हो सकती है)। नीचे के लिंक से Google पर देखिए।"
+      : "Could not load results here (the free daily limit may be used up). Use the link below to see them on Google.";
+  }
+}
+document.getElementById("moreBtn").addEventListener("click", e => {
+  runCse(cseQuery, cseCat, cseNote, parseInt(e.currentTarget.dataset.start, 10) || 1);
+});
+
+/* ---------- Install as an app (PWA) ---------- */
+const installBtn = document.getElementById("installBtn");
+let deferredInstall = null;
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredInstall = e;
+  installBtn.classList.remove("hidden");
+});
+installBtn.addEventListener("click", async () => {
+  if (!deferredInstall) return;
+  deferredInstall.prompt();
+  try { await deferredInstall.userChoice; } catch(e){}
+  deferredInstall = null;
+  installBtn.classList.add("hidden");
+});
+window.addEventListener("appinstalled", () => installBtn.classList.add("hidden"));
+if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+
+function toggleMenu(){
+  document.getElementById("nav").classList.toggle("open");
+}
+
+document.querySelectorAll("#nav a").forEach(link=>{
+  link.addEventListener("click",()=>document.getElementById("nav").classList.remove("open"));
+});
+</script>
+
+<!-- ================= LOGIN SCRIPT (Firebase) ================= -->
+<script>
+/* ============ PASTE YOUR FIREBASE CONFIG HERE ============
+   Firebase Console > Project settings > Your apps > Web app > Config */
+const firebaseConfig = {
+  apiKey: "AIzaSyBhyBFbWhUV1CDge6ltTr7zBKGN1VshA_Y",
+  authDomain: "khoj-f9bae.firebaseapp.com",
+  projectId: "khoj-f9bae",
+  appId: "1:110399510032:web:1fc69ddf7990de98c45c95"
+};
+/* ========================================================= */
+
+const configured = !firebaseConfig.apiKey.startsWith("YOUR_");
+let auth = null, fb = null, loadFailed = false;
+
+/* Firebase loads in the background, so the Login button works even if loading fails */
+const ready = (async () => {
+  if (!configured) return;
+  try {
+    const base = "https://www.gstatic.com/firebasejs/10.12.2/";
+    const [appM, authM] = await Promise.all([
+      import(base + "firebase-app.js"),
+      import(base + "firebase-auth.js")
+    ]);
+    fb = authM;
+    auth = authM.getAuth(appM.initializeApp(firebaseConfig));
+    authM.onAuthStateChanged(auth, user => renderUser(user));
+  } catch (err) {
+    loadFailed = true;
+    console.error("Firebase failed to load:", err);
+  }
+})();
+
+const $ = id => document.getElementById(id);
+const modal = $("authModal");
+const views = ["loginView","signupView","forgotView"];
+
+function clearMsgs(){
+  modal.querySelectorAll(".a-msg").forEach(m => { m.className = "a-msg"; m.textContent = ""; });
+}
+function showMsg(id, text, type){
+  const el = $(id);
+  el.textContent = text;
+  el.className = "a-msg show " + (type || "error");
+}
+function go(viewId){
+  clearMsgs();
+  views.forEach(v => $(v).classList.toggle("hidden", v !== viewId));
+}
+function openModal(view){
+  document.getElementById("nav").classList.remove("open");
+  go(view === "signup" ? "signupView" : "loginView");
+  modal.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(){
+  modal.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+/* the Login button in the header calls this */
+window.showLogin = () => openModal("login");
+
+$("aClose").addEventListener("click", closeModal);
+modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+modal.querySelectorAll("[data-go]").forEach(el =>
+  el.addEventListener("click", e => { e.preventDefault(); go(el.dataset.go); }));
+modal.querySelectorAll(".a-eye").forEach(btn =>
+  btn.addEventListener("click", () => {
+    const i = $(btn.dataset.target);
+    const show = i.type === "password";
+    i.type = show ? "text" : "password";
+    btn.textContent = show ? "Hide" : "Show";
+  }));
+
+const normEmail = v => v.trim().toLowerCase();
+const validEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+const busy = (form, s) => { const b = form.querySelector(".a-btn[type=submit]"); if (b) b.disabled = s; };
+
+function friendly(err){
+  const map = {
+    "auth/email-already-in-use": "This email is already registered. Please sign in.",
+    "auth/invalid-email": "Please enter a valid email address.",
+    "auth/weak-password": "Password must be at least 6 characters.",
+    "auth/user-not-found": "No account found with this email.",
+    "auth/wrong-password": "Wrong password. Try again or reset it.",
+    "auth/invalid-credential": "Wrong email or password.",
+    "auth/too-many-requests": "Too many attempts. Please wait a bit and try again.",
+    "auth/network-request-failed": "Network error. Check your internet connection.",
+    "auth/popup-closed-by-user": "Google sign-in was closed before finishing.",
+    "auth/popup-blocked": "Popup blocked. Allow popups and try again.",
+    "auth/unauthorized-domain": "This domain is not authorized in Firebase. Add it under Authentication > Settings > Authorized domains.",
+    "auth/operation-not-allowed": "This sign-in method is not enabled in Firebase Console.",
+    "auth/operation-not-supported-in-this-environment": "Google sign-in does not work here. Open the page from http(s) hosting."
+  };
+  return map[err.code] || ("Something went wrong (" + (err.code || err.message) + ").");
+}
+function needConfig(id){
+  if (!configured) {
+    showMsg(id, "Firebase is not set up yet. Paste your firebaseConfig in the code.");
+    return true;
+  }
+  if (!auth) {
+    showMsg(id, loadFailed
+      ? "Could not load Firebase. Check your internet, or open the page from http(s) hosting instead of the editor preview."
+      : "Still loading. Try again in a moment.");
+    return true;
+  }
+  return false;
+}
+
+/* Sign up */
+$("signupForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = e.target;
+  const name = $("signName").value.trim();
+  const email = normEmail($("signEmail").value);
+  const pass = $("signPass").value;
+  const pass2 = $("signPass2").value;
+
+  await ready;
+  if (needConfig("signupMsg")) return;
+  if (name.length < 2) return showMsg("signupMsg", "Please enter your full name.");
+  if (!validEmail(email)) return showMsg("signupMsg", "Please enter a valid email address.");
+  if (pass.length < 6) return showMsg("signupMsg", "Password must be at least 6 characters.");
+  if (pass !== pass2) return showMsg("signupMsg", "Passwords do not match.");
+
+  busy(form, true);
+  try {
+    const cred = await fb.createUserWithEmailAndPassword(auth, email, pass);
+    await fb.updateProfile(cred.user, { displayName: name });
+    form.reset();
+    renderUser(auth.currentUser);
+    closeModal();
+  } catch (err) {
+    showMsg("signupMsg", friendly(err));
+  }
+  busy(form, false);
+});
+
+/* Sign in */
+$("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = e.target;
+  const email = normEmail($("loginEmail").value);
+  const pass = $("loginPass").value;
+
+  await ready;
+  if (needConfig("loginMsg")) return;
+  if (!validEmail(email)) return showMsg("loginMsg", "Please enter a valid email address.");
+  if (!pass) return showMsg("loginMsg", "Please enter your password.");
+
+  busy(form, true);
+  try {
+    await fb.signInWithEmailAndPassword(auth, email, pass);
+    form.reset();
+    closeModal();
+  } catch (err) {
+    showMsg("loginMsg", friendly(err));
+  }
+  busy(form, false);
+});
+
+/* Google */
+$("googleBtn").addEventListener("click", async () => {
+  await ready;
+  if (needConfig("loginMsg")) return;
+  try {
+    await fb.signInWithPopup(auth, new fb.GoogleAuthProvider());
+    closeModal();
+  } catch (err) {
+    showMsg("loginMsg", friendly(err));
+  }
+});
+
+/* Forgot password */
+$("forgotForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = e.target;
+  const email = normEmail($("forgotEmail").value);
+
+  await ready;
+  if (needConfig("forgotMsg")) return;
+  if (!validEmail(email)) return showMsg("forgotMsg", "Please enter a valid email address.");
+
+  busy(form, true);
+  try {
+    await fb.sendPasswordResetEmail(auth, email);
+    showMsg("forgotMsg", "If an account exists for this email, a reset link has been sent. Check your inbox and spam folder.", "ok");
+    form.reset();
+  } catch (err) {
+    showMsg("forgotMsg", friendly(err));
+  }
+  busy(form, false);
+});
+
+/* Header state: Login <-> Hi, name + Logout */
+function renderUser(user){
+  window.khojUser = user || null;
+  document.querySelectorAll("[data-guest]").forEach(el => el.classList.toggle("hidden", !!user));
+  document.querySelectorAll("[data-user]").forEach(el => el.classList.toggle("hidden", !user));
+  if (user) {
+    const name = user.displayName || user.email.split("@")[0];
+    const hello = window.khojLang === "hi" ? "नमस्ते, " : "Hi, ";
+    document.querySelectorAll("[data-username]").forEach(el => el.textContent = hello + name.split(" ")[0]);
+  }
+  window.dispatchEvent(new Event("authchange"));
+}
+window.addEventListener("langchange", () => renderUser(window.khojUser));
+
+document.querySelectorAll("[data-logout]").forEach(b =>
+  b.addEventListener("click", async () => { if (auth) await fb.signOut(auth); }));
+
+renderUser(null);
+</script>
+</body>
+</html>
