@@ -1429,6 +1429,18 @@ document.querySelectorAll("[data-logout]").forEach(b =>
   b.addEventListener("click", async () => { if (auth) await fb.signOut(auth); }));
 
 renderUser(null);
+  </script>
+  <script>
+(function(){
+  var KEY='khoj_saved';
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return[]}}
+  function store(a){try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}
+  var input=document.querySelector('.search-shell input')||document.querySelector('input[type="search"]')||document.querySelector('input[type="text"]');
+  if(!input)return;
+
+  var css=document.createElement('style');
+  css.textContent=
+  '#sv-fab{position:fixed;
 </script>
 </body>
 </html>
