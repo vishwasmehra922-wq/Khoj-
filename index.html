@@ -1528,6 +1528,91 @@ renderUser(null);
     panel.classList.toggle('open');
   };
 })();
+  <script>
+(function(){
+  var css=document.createElement('style');
+  css.textContent=
+  '#tl-fab{position:fixed;left:16px;bottom:16px;z-index:50;padding:12px 16px;border-radius:30px;border:0;background:linear-gradient(110deg,#7c3aed,#4f46e5);color:#fff;font-weight:bold;cursor:pointer}'+
+  '#tl-panel{position:fixed;left:16px;bottom:70px;z-index:50;width:min(340px,calc(100vw - 32px));max-height:70vh;overflow:auto;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:14px;padding:14px;display:none}'+
+  '#tl-panel.open{display:block}'+
+  '#tl-panel h4{margin:6px 0 8px;font-size:15px}'+
+  '#tl-panel input[type=text]{width:100%;padding:10px;margin-bottom:8px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text)}'+
+  '#tl-panel .btn{width:100%;margin:8px 0}'+
+  '#tl-panel hr{border:0;border-top:1px solid var(--border);margin:14px 0}'+
+  '#tl-qr{display:flex;justify-content:center;background:#fff;padding:10px;border-radius:10px}'+
+  '#tl-qr:empty{display:none}'+
+  '#tl-dl{display:block;text-align:center;text-decoration:none;padding:10px;border-radius:10px;background:#5428a5;color:#fff;margin-top:8px}'+
+  '.tl-note{font-size:12px;color:var(--muted)}';
+  document.head.appendChild(css);
+
+  var fab=document.createElement('button');
+  fab.id='tl-fab'; fab.type='button'; fab.textContent='🛠 Tools';
+  var panel=document.createElement('div');
+  panel.id='tl-panel';
+  panel.innerHTML=
+  '<h4>QR Code Generator</h4>'+
+  '<input type="text" id="tl-text" placeholder="Enter a link or text">'+
+  '<button type="button" class="btn primary" id="tl-qbtn">Generate QR</button>'+
+  '<div id="tl-qr"></div><hr>'+
+  '<h4>Image Compressor</h4>'+
+  '<input type="file" id="tl-file" accept="image/*">'+
+  '<p class="tl-note">Quality: <span id="tl-qv">70</span>%</p>'+
+  '<input type="range" id="tl-q" min="20" max="95" value="70" style="width:100%">'+
+  '<button type="button" class="btn primary" id="tl-cbtn">Compress</button>'+
+  '<p class="tl-note" id="tl-out"></p>'+
+  '<a id="tl-dl" class="hidden" download="khoj-compressed.jpg">Download</a>';
+  document.body.appendChild(fab);
+  document.body.appendChild(panel);
+
+  function $(id){return document.getElementById(id)}
+  fab.onclick=function(){panel.classList.toggle('open')};
+  $('tl-q').oninput=function(){$('tl-qv').textContent=this.value};
+
+  function loadQR(cb){
+    if(window.QRCode)return cb();
+    var s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+    s.onload=cb;
+    document.head.appendChild(s);
+  }
+  $('tl-qbtn').onclick=function(){
+    var t=$('tl-text').value.trim();
+    if(!t)return;
+    loadQR(function(){
+      var box=$('tl-qr');
+      box.textContent='';
+      new QRCode(box,{text:t,width:200,height:200});
+    });
+  };
+
+  $('tl-cbtn').onclick=function(){
+    var f=$('tl-file').files[0], out=$('tl-out'), dl=$('tl-dl');
+    if(!f){out.textContent='Please choose an image first.';return}
+    var url=URL.createObjectURL(f), img=new Image();
+    img.onerror=function(){out.textContent='This image could not be opened.'};
+    img.onload=function(){
+      var sc=Math.min(1,1600/Math.max(img.width,img.height));
+      var c=document.createElement('canvas');
+      c.width=Math.round(img.width*sc);
+      c.height=Math.round(img.height*sc);
+      var ctx=c.getContext('2d');
+      ctx.fillStyle='#fff';
+      ctx.fillRect(0,0,c.width,c.height);
+      ctx.drawImage(img,0,0,c.width,c.height);
+      URL.revokeObjectURL(url);
+      c.toBlob(function(b){
+        if(!b){out.textContent='Compression failed.';return}
+        if(dl.dataset.u)URL.revokeObjectURL(dl.dataset.u);
+        var u=URL.createObjectURL(b);
+        dl.dataset.u=u; dl.href=u;
+        dl.classList.remove('hidden');
+        out.textContent=Math.round(f.size/1024)+' KB → '+Math.round(b.size/1024)+' KB';
+      },'image/jpeg',$('tl-q').value/100);
+    };
+    img.src=url;
+  };
+})();
+</script>
 </script>
 </body>
 </html>
