@@ -1743,5 +1743,34 @@ input.gsc-input{background:transparent!important;color:var(--text)!important}
 .gs-snippet{color:var(--muted)!important}
 .gsc-url-top,.gs-visibleUrl{color:var(--muted)!important}
 </style>
+  <style>
+.gsc-control-cse .gsc-search-box{display:none!important}
+.gsc-control-cse{margin-bottom:100px!important}
+</style>
+<script>
+(function(){
+  var form=document.getElementById('searchForm');
+  var input=document.getElementById('searchInput');
+  if(!form||!input)return;
+
+  form.addEventListener('submit',function(){
+    var q=input.value.trim();
+    if(!q)return;
+    var tries=0;
+    (function go(){
+      var gi=document.querySelector('input.gsc-input');
+      var gb=document.querySelector('button.gsc-search-button');
+      if(gi&&gb){
+        gi.value=q;
+        gb.click();
+        var box=document.querySelector('.gsc-control-cse');
+        if(box)setTimeout(function(){box.scrollIntoView({behavior:'smooth'})},400);
+      }else if(tries++<20){
+        setTimeout(go,250);
+      }
+    })();
+  });
+})();
+</script>
 </body>
 </html>
