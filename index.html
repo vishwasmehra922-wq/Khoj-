@@ -353,10 +353,74 @@ color:#a2a5b5;font-size:12px;
   color:color-mix(in srgb,var(--c) 45%,#fff)}
 .kcard .art{position:absolute;right:-6px;top:6px;font-size:54px;opacity:.28;
   filter:drop-shadow(0 0 10px var(--c));pointer-events:none}
+
+/* ===== KHOJ space background ===== */
+.bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;
+background:radial-gradient(circle at 8% 100%,rgba(124,58,237,.35),transparent 45%),radial-gradient(circle at 100% 0%,rgba(56,100,255,.18),transparent 40%)}
+.bgfx .stars{position:absolute;inset:0;opacity:.85;animation:khtw 5s ease-in-out infinite;
+background-image:radial-gradient(1.2px 1.2px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 28% 62%,#cfe0ff,transparent),radial-gradient(1.4px 1.4px at 47% 12%,#fff,transparent),radial-gradient(1px 1px at 63% 40%,#cfe0ff,transparent),radial-gradient(1.2px 1.2px at 78% 74%,#fff,transparent),radial-gradient(1px 1px at 90% 22%,#fff,transparent),radial-gradient(1px 1px at 8% 85%,#cfe0ff,transparent),radial-gradient(1.2px 1.2px at 55% 88%,#fff,transparent),radial-gradient(1px 1px at 35% 30%,#fff,transparent),radial-gradient(1px 1px at 72% 8%,#cfe0ff,transparent)}
+.bgfx .waves{position:absolute;left:0;bottom:0;width:100%;height:38vh;filter:drop-shadow(0 0 8px rgba(124,58,237,.7));animation:khwv 14s ease-in-out infinite alternate}
+.bgtop{position:absolute;top:0;left:0;right:0;height:720px;z-index:-1;pointer-events:none;overflow:hidden}
+.bgtop .globe{position:absolute;right:-110px;top:70px;width:320px;height:320px;border-radius:50%;overflow:hidden;opacity:.9;
+background:radial-gradient(circle at 30% 30%,#2a45b8 0%,#0f1c6b 40%,#060b32 75%);
+box-shadow:0 0 70px 12px rgba(70,120,255,.4),inset 14px 10px 40px rgba(130,180,255,.35),inset -30px -24px 60px rgba(0,0,0,.65)}
+.bgtop .globe:after{content:"";position:absolute;inset:0;border-radius:50%;animation:khgs 40s linear infinite;
+background-image:radial-gradient(circle,rgba(150,200,255,.85) 1px,transparent 1.6px);background-size:11px 11px;
+-webkit-mask-image:radial-gradient(circle at 30% 30%,#000,transparent 70%);mask-image:radial-gradient(circle at 30% 30%,#000,transparent 70%)}
+.ftile{position:absolute;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:20px;
+background:linear-gradient(135deg,rgba(90,110,255,.55),rgba(60,40,160,.5));border:1px solid rgba(150,170,255,.5);
+box-shadow:0 6px 20px rgba(80,90,255,.4);animation:khtf 5s ease-in-out infinite}
+.t1{left:5%;top:150px;rotate:-12deg}
+.t2{left:3%;top:228px;width:38px;height:38px;font-size:17px;rotate:10deg;animation-delay:-1.6s}
+.t3{left:9%;top:300px;width:32px;height:32px;font-size:14px;rotate:-6deg;animation-delay:-3s}
+@keyframes khtw{50%{opacity:.45}}
+@keyframes khwv{to{transform:translateX(-3%)}}
+@keyframes khgs{to{background-position:110px 0}}
+@keyframes khtf{50%{translate:0 -10px}}
+@media(max-width:600px){
+.bgtop .globe{width:220px;height:220px;right:-90px;top:90px;opacity:.55}
+.t1{left:2%;top:130px;width:36px;height:36px}.t2{left:2%;top:190px}.t3{left:4%;top:240px}}
+
+/* ===== AI banner + robot ===== */
+.ai-section{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;padding:26px 28px;
+background:radial-gradient(ellipse at 78% 50%,rgba(90,80,255,.5),transparent 62%),linear-gradient(120deg,#1b1160,#0d1a5c 60%,#0a1038);
+border:1px solid rgba(124,140,255,.45);box-shadow:0 0 40px rgba(80,70,255,.25)}
+.ai-text{flex:1;min-width:0}
+.ai-tag{display:inline-block;font-size:11px;padding:5px 11px;border-radius:999px;background:rgba(10,16,56,.7);border:1px solid rgba(140,150,255,.4);color:#c7d2fe;margin-bottom:12px}
+.ai-text h2{font-size:24px;margin-bottom:0}
+.ai-section .ai-text p{margin:10px 0 18px;max-width:420px;font-size:14px}
+.ai-robot{flex:0 0 44%;max-width:320px}
+.robot-svg{display:block;width:100%;height:auto;overflow:visible}
+@media(max-width:560px){
+.ai-section{flex-direction:column-reverse;text-align:center;padding:20px 16px}
+.ai-section .ai-text p{margin-left:auto;margin-right:auto}
+.ai-robot{flex:none;width:min(78%,250px)}}
+@media(prefers-reduced-motion:no-preference){
+.r-bot,.r-screen{animation:khrf 3.4s ease-in-out infinite}
+.r-screen{animation-delay:-1.2s;animation-duration:4s}
+.r-head{animation:khrt 4.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+.r-eye{animation:khrb 4.5s infinite;transform-box:fill-box;transform-origin:center}
+.r-arm{animation:khra 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 8%}
+.r-ant{animation:khrp 1.6s ease-in-out infinite}
+.r-ring{animation:khrr 2.5s linear infinite}}
+@keyframes khrf{50%{transform:translateY(-9px)}}
+@keyframes khrt{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes khrb{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes khra{0%,100%{transform:rotate(30deg)}50%{transform:rotate(52deg)}}
+@keyframes khrp{50%{opacity:.35}}
+@keyframes khrr{to{stroke-dashoffset:-28}}
 </style>
 </head>
 
 <body>
+<div class="bgfx" aria-hidden="true"><i class="stars"></i>
+  <svg class="waves" viewBox="0 0 800 300" preserveAspectRatio="none"><defs><linearGradient id="khWg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a855f7"/><stop offset="1" stop-color="#38bdf8"/></linearGradient></defs>
+    <path d="M0 300V205C220 140 430 265 800 150V300Z" fill="rgba(90,60,220,.16)"/>
+    <path d="M0 220C200 120 400 300 800 140" fill="none" stroke="url(#khWg)" stroke-width="2.5" opacity=".75"/>
+    <path d="M0 252C250 180 450 292 800 192" fill="none" stroke="url(#khWg)" stroke-width="2" opacity=".5"/>
+    <path d="M0 190C150 262 450 90 800 232" fill="none" stroke="url(#khWg)" stroke-width="1.5" opacity=".4"/></svg></div>
+<div class="bgtop" aria-hidden="true"><i class="globe"></i>
+  <span class="ftile t1">🔍</span><span class="ftile t2">🖼️</span><span class="ftile t3">▶️</span></div>
 <header>
   <div class="logo">⌕ KHOJ</div>
   <nav id="nav">
@@ -467,10 +531,33 @@ color:#a2a5b5;font-size:12px;
     </section>
 
   <section class="ai-section" id="ai">
-    <div class="ico c2"><svg class="" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></div>
-    <h2>Discover More with KHOJ AI</h2>
-    <p>Explore ideas and questions. A real AI service must be connected before KHOJ can generate its own answers.</p>
-    <button class="primary" onclick="chooseCategory('ai')">Try AI Search ↗</button>
+    <div class="ai-text">
+      <span class="ai-tag">✦ Powered by AI</span>
+      <h2>Discover More with KHOJ AI</h2>
+      <p>Explore ideas and questions. A real AI service must be connected before KHOJ can generate its own answers.</p>
+      <button class="primary" onclick="chooseCategory('ai')">Try AI Search ↗</button>
+    </div>
+    <div class="ai-robot" aria-hidden="true">
+<svg class="robot-svg" viewBox="0 0 260 230"><defs>
+<linearGradient id="khRb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f7ff"/><stop offset="1" stop-color="#8ea8ff"/></linearGradient>
+<radialGradient id="khRg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#6d6bff" stop-opacity=".55"/><stop offset="1" stop-color="#6d6bff" stop-opacity="0"/></radialGradient></defs>
+<ellipse cx="170" cy="115" rx="98" ry="98" fill="url(#khRg)"/>
+<ellipse class="r-ring" cx="170" cy="205" rx="82" ry="14" fill="none" stroke="#5eb0ff" stroke-width="2" stroke-dasharray="7 7"/>
+<g class="r-screen"><path d="M12 64L98 52V128L12 140Z" fill="rgba(70,130,255,.28)" stroke="#7cc4ff" stroke-width="1.5"/>
+<circle cx="50" cy="92" r="15" fill="none" stroke="#fff" stroke-width="4"/><path d="M61 104L73 118" stroke="#fff" stroke-width="5" stroke-linecap="round"/></g>
+<g class="r-bot"><g transform="translate(70,0)">
+<rect class="r-arm" x="50" y="126" width="20" height="46" rx="10" fill="url(#khRb)"/>
+<rect x="130" y="130" width="20" height="44" rx="10" fill="url(#khRb)"/>
+<rect x="64" y="116" width="72" height="72" rx="30" fill="url(#khRb)"/>
+<circle class="r-ant" cx="100" cy="150" r="7" fill="#22d3ee"/>
+<g class="r-head"><line x1="100" y1="48" x2="100" y2="32" stroke="#8ea8ff" stroke-width="3"/><circle class="r-ant" cx="100" cy="27" r="5" fill="#22d3ee"/>
+<circle cx="46" cy="84" r="9" fill="#8ea8ff"/><circle cx="154" cy="84" r="9" fill="#8ea8ff"/>
+<rect x="52" y="48" width="96" height="72" rx="32" fill="url(#khRb)"/>
+<rect x="62" y="60" width="76" height="46" rx="22" fill="#0a1240"/>
+<ellipse class="r-eye" cx="84" cy="82" rx="7" ry="9" fill="#22d3ee"/><ellipse class="r-eye" cx="116" cy="82" rx="7" ry="9" fill="#22d3ee"/>
+<path d="M91 96Q100 103 109 96" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round"/></g>
+</g></g></svg>
+    </div>
   </section>
 </main>
 
