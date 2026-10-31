@@ -409,42 +409,6 @@ color:#a2a5b5;font-size:12px;
     </a>
   </section>
 
-  <section id="explore">
-    <h2 class="section-title">Explore KHOJ</h2>
-    <p class="section-subtitle">Discover more of what matters to you.</p>
-    <div class="cards">
-      <article class="card">
-        <div class="ico c1"><svg class="" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div><h3>Web Search</h3>
-        <p>Discover websites and useful information from across the internet.</p>
-        <button onclick="chooseCategory('web')">Explore Web ↗</button>
-      </article>
-      <article class="card">
-        <div class="ico c2"><svg class="" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></div><h3>AI Answers</h3>
-        <p>Find information for your questions with AI search services.</p>
-        <button onclick="chooseCategory('ai')">Explore AI ↗</button>
-      </article>
-      <article class="card">
-        <div class="ico c3"><svg class="" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg></div><h3>Image Search</h3>
-        <p>Explore pictures related to your favorite topics.</p>
-        <button onclick="chooseCategory('images')">Explore Images ↗</button>
-      </article>
-      <article class="card">
-        <div class="ico c4"><svg class="" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></div><h3>Video Search</h3>
-        <p>Discover tutorials, lessons and entertainment on YouTube.</p>
-        <button onclick="chooseCategory('videos')">Explore Videos ↗</button>
-      </article>
-      <article class="card">
-        <div class="ico c5"><svg class="" viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg></div><h3>News Search</h3>
-        <p>Explore news and current events from across the world.</p>
-        <button onclick="chooseCategory('news')">Explore News ↗</button>
-      </article>
-      <article class="card">
-        <div class="ico c6"><svg class="" viewBox="0 0 24 24"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></div><h3>Education</h3>
-        <p>Find courses, study notes and learning resources.</p>
-        <button onclick="chooseCategory('education')">Start Learning ↗</button>
-      </article>
-    </div>
-  </section>
 
   <section class="ai-section" id="ai">
     <div class="ico c2"><svg class="" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></div>
@@ -482,7 +446,73 @@ color:#a2a5b5;font-size:12px;
 <div class="a-modal" id="authModal" role="dialog" aria-modal="true">
   <div class="a-box">
     <button type="button" class="a-close" id="aClose" aria-label="Close">×</button>
+<!-- ===== KHOJ: Explore Cards ===== -->
+<!-- <style> wala hissa apne CSS me, <section> wala hissa purane cards ki jagah paste karein -->
+<style>
+.explore{padding:28px 14px;max-width:1100px;margin:0 auto;color:#fff}
+.explore h2{text-align:center;font-size:24px}
+.explore .sub{text-align:center;opacity:.7;font-size:13px;margin:4px 0 20px}
+.kcards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:700px){.kcards{grid-template-columns:repeat(3,1fr);gap:16px}}
 
+.kcard{--c:#7c5cff;position:relative;overflow:hidden;display:block;text-decoration:none;color:#fff;
+  padding:16px 14px 14px;border-radius:16px;min-height:170px;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--c) 38%,#0a1030),#0a0f2a 85%);
+  border:1px solid color-mix(in srgb,var(--c) 55%,transparent);
+  box-shadow:0 6px 24px color-mix(in srgb,var(--c) 22%,transparent);
+  transition:transform .2s,box-shadow .2s}
+.kcard:active,.kcard:hover{transform:translateY(-3px);
+  box-shadow:0 10px 30px color-mix(in srgb,var(--c) 45%,transparent)}
+.kcard .ico{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  font-size:18px;background:var(--c);box-shadow:0 0 16px var(--c)}
+.kcard h3{font-size:16px;margin:12px 0 4px}
+.kcard p{font-size:12px;line-height:1.45;opacity:.78;max-width:85%}
+.kcard .go{display:inline-block;margin-top:10px;font-size:13px;font-weight:600;
+  color:color-mix(in srgb,var(--c) 45%,#fff)}
+/* kone ka bada halka chitra */
+.kcard .art{position:absolute;right:-6px;top:6px;font-size:54px;opacity:.28;
+  filter:drop-shadow(0 0 10px var(--c));pointer-events:none}
+</style>
+
+<section class="explore" id="explore">
+  <h2>Explore KHOJ</h2>
+  <p class="sub">Discover more of what matters to you.</p>
+
+  <div class="kcards">
+    <a class="kcard" style="--c:#6d5cff" href="#web">
+      <span class="art">🌐</span><div class="ico">🌐</div>
+      <h3>Web Search</h3><p>Discover websites and useful information from across the internet.</p>
+      <span class="go">Explore Web →</span>
+    </a>
+    <a class="kcard" style="--c:#e040c8" href="#ai">
+      <span class="art">🧠</span><div class="ico">✨</div>
+      <h3>AI Answers</h3><p>Find information for your questions with AI search services.</p>
+      <span class="go">Explore AI →</span>
+    </a>
+    <a class="kcard" style="--c:#2f8bff" href="#images">
+      <span class="art">🏞️</span><div class="ico">🖼️</div>
+      <h3>Image Search</h3><p>Explore pictures related to your favorite topics.</p>
+      <span class="go">Explore Images →</span>
+    </a>
+    <a class="kcard" style="--c:#ff4d4d" href="#videos">
+      <span class="art">🎬</span><div class="ico">▶️</div>
+      <h3>Video Search</h3><p>Discover tutorials, lessons and entertainment on YouTube.</p>
+      <span class="go">Explore Videos →</span>
+    </a>
+    <a class="kcard" style="--c:#9acd32" href="#news">
+      <span class="art">📰</span><div class="ico">📄</div>
+      <h3>News Search</h3><p>Explore news and current events from across the world.</p>
+      <span class="go">Explore News →</span>
+    </a>
+    <a class="kcard" style="--c:#14c2a8" href="#education">
+      <span class="art">📚</span><div class="ico">🎓</div>
+      <h3>Education</h3><p>Find courses, study notes and learning resources.</p>
+      <span class="go">Start Learning →</span>
+    </a>
+  </div>
+</section>
+
+    
     <!-- Login -->
     <section id="loginView">
       <h2>Welcome Back</h2>
@@ -1798,46 +1828,7 @@ input.gsc-input{background:transparent!important;color:var(--text)!important}
 /* kone ka bada halka chitra */
 .kcard .art{position:absolute;right:-6px;top:6px;font-size:54px;opacity:.28;
   filter:drop-shadow(0 0 10px var(--c));pointer-events:none}
-</style>
-  <style>
 
-<section class="explore" id="explore">
-  <h2>Explore KHOJ</h2>
-  <p class="sub">Discover more of what matters to you.</p>
-
-  <div class="cards">
-    <a class="kcard" style="--c:#6d5cff" href="#web">
-      <span class="art">🌐</span><div class="ico">🌐</div>
-      <h3>Web Search</h3><p>Discover websites and useful information from across the internet.</p>
-      <span class="go">Explore Web →</span>
-    </a>
-    <a class="kcard" style="--c:#e040c8" href="#ai">
-      <span class="art">🧠</span><div class="ico">✨</div>
-      <h3>AI Answers</h3><p>Find information for your questions with AI search services.</p>
-      <span class="go">Explore AI →</span>
-    </a>
-    <a class="kcard" style="--c:#2f8bff" href="#images">
-      <span class="art">🏞️</span><div class="ico">🖼️</div>
-      <h3>Image Search</h3><p>Explore pictures related to your favorite topics.</p>
-      <span class="go">Explore Images →</span>
-    </a>
-    <a class="kcard" style="--c:#ff4d4d" href="#videos">
-      <span class="art">🎬</span><div class="ico">▶️</div>
-      <h3>Video Search</h3><p>Discover tutorials, lessons and entertainment on YouTube.</p>
-      <span class="go">Explore Videos →</span>
-    </a>
-    <a class="kcard" style="--c:#9acd32" href="#news">
-      <span class="art">📰</span><div class="ico">📄</div>
-      <h3>News Search</h3><p>Explore news and current events from across the world.</p>
-      <span class="go">Explore News →</span>
-    </a>
-    <a class="kcard" style="--c:#14c2a8" href="#education">
-      <span class="art">📚</span><div class="ico">🎓</div>
-      <h3>Education</h3><p>Find courses, study notes and learning resources.</p>
-      <span class="go">Start Learning →</span>
-    </a>
-  </div>
-</section>
 
   <style>
 /* ===== KHOJ new look: header + hero (mobile) ===== */
