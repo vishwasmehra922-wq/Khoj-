@@ -356,30 +356,45 @@ color:#a2a5b5;font-size:12px;
 
 /* ===== KHOJ space background ===== */
 .bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;
-background:radial-gradient(circle at 8% 100%,rgba(124,58,237,.35),transparent 45%),radial-gradient(circle at 100% 0%,rgba(56,100,255,.18),transparent 40%)}
+background:radial-gradient(circle at 8% 100%,rgba(124,58,237,.32),transparent 45%),radial-gradient(circle at 100% 0%,rgba(56,100,255,.18),transparent 40%)}
 .bgfx .stars{position:absolute;inset:0;opacity:.85;animation:khtw 5s ease-in-out infinite;
 background-image:radial-gradient(1.2px 1.2px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 28% 62%,#cfe0ff,transparent),radial-gradient(1.4px 1.4px at 47% 12%,#fff,transparent),radial-gradient(1px 1px at 63% 40%,#cfe0ff,transparent),radial-gradient(1.2px 1.2px at 78% 74%,#fff,transparent),radial-gradient(1px 1px at 90% 22%,#fff,transparent),radial-gradient(1px 1px at 8% 85%,#cfe0ff,transparent),radial-gradient(1.2px 1.2px at 55% 88%,#fff,transparent),radial-gradient(1px 1px at 35% 30%,#fff,transparent),radial-gradient(1px 1px at 72% 8%,#cfe0ff,transparent)}
-.bgfx .waves{position:absolute;left:0;bottom:0;width:100%;height:38vh;filter:drop-shadow(0 0 8px rgba(124,58,237,.7));animation:khwv 14s ease-in-out infinite alternate}
-.bgtop{position:absolute;top:0;left:0;right:0;height:720px;z-index:-1;pointer-events:none;overflow:hidden}
-.bgtop .globe{position:absolute;right:-110px;top:70px;width:320px;height:320px;border-radius:50%;overflow:hidden;opacity:.9;
-background:radial-gradient(circle at 30% 30%,#2a45b8 0%,#0f1c6b 40%,#060b32 75%);
-box-shadow:0 0 70px 12px rgba(70,120,255,.4),inset 14px 10px 40px rgba(130,180,255,.35),inset -30px -24px 60px rgba(0,0,0,.65)}
-.bgtop .globe:after{content:"";position:absolute;inset:0;border-radius:50%;animation:khgs 40s linear infinite;
-background-image:radial-gradient(circle,rgba(150,200,255,.85) 1px,transparent 1.6px);background-size:11px 11px;
--webkit-mask-image:radial-gradient(circle at 30% 30%,#000,transparent 70%);mask-image:radial-gradient(circle at 30% 30%,#000,transparent 70%)}
-.ftile{position:absolute;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:20px;
-background:linear-gradient(135deg,rgba(90,110,255,.55),rgba(60,40,160,.5));border:1px solid rgba(150,170,255,.5);
-box-shadow:0 6px 20px rgba(80,90,255,.4);animation:khtf 5s ease-in-out infinite}
-.t1{left:5%;top:150px;rotate:-12deg}
-.t2{left:3%;top:228px;width:38px;height:38px;font-size:17px;rotate:10deg;animation-delay:-1.6s}
-.t3{left:9%;top:300px;width:32px;height:32px;font-size:14px;rotate:-6deg;animation-delay:-3s}
+.bgfx .waves{position:absolute;left:-5%;bottom:0;width:110%;height:34vh;opacity:.7;filter:drop-shadow(0 0 8px rgba(124,58,237,.7));animation:khwv 14s ease-in-out infinite alternate}
+footer{position:relative;z-index:1;background:rgba(5,8,22,.72)}
+.bgtop{position:absolute;top:0;left:0;right:0;height:720px;z-index:-1;pointer-events:none;overflow:hidden;perspective:700px}
+.bgtop .globe{position:absolute;right:-70px;top:60px;width:320px;height:320px;border-radius:50%;opacity:.95;
+background:radial-gradient(circle at 32% 30%,#25409f 0%,#0e1a66 42%,#050a2e 78%);
+box-shadow:0 0 60px 8px rgba(70,120,255,.38),inset 16px 12px 46px rgba(130,180,255,.32),inset -36px -28px 64px rgba(0,0,0,.7)}
+.bgtop .globe canvas{position:absolute;inset:0;width:100%;height:100%;border-radius:50%}
+/* floating glass icons */
+.ftile{--tc:#6d6bff;position:absolute;width:52px;height:52px;border-radius:15px;display:grid;place-items:center;color:#fff;
+background:linear-gradient(145deg,color-mix(in srgb,var(--tc) 85%,#fff),color-mix(in srgb,var(--tc) 55%,#0a0f2a));
+box-shadow:0 12px 28px color-mix(in srgb,var(--tc) 55%,transparent),inset 0 0 0 1px rgba(255,255,255,.28)}
+.ftile svg{position:relative;width:55%;height:55%;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.ftile:before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,.55),transparent 48%)}
+.ftile:after{content:"";position:absolute;inset:-6px;border-radius:19px;border:1px solid color-mix(in srgb,var(--tc) 65%,transparent);animation:khhalo 2.8s ease-out infinite}
+.t1{left:4%;top:128px;transform:rotate(-12deg);animation:khf1 7s ease-in-out infinite}
+.t2{--tc:#e040c8;left:2%;top:222px;width:44px;height:44px;border-radius:13px;transform:rotate(10deg);animation:khf2 8.5s ease-in-out infinite}
+.t2:after{animation-delay:-.9s}
+.t3{--tc:#ff7a45;left:11%;top:300px;width:38px;height:38px;border-radius:11px;transform:rotate(-6deg);animation:khf3 6s ease-in-out infinite}
+.t3:after{animation-delay:-1.8s}
+@keyframes khf1{0%,100%{transform:translate(0,0) rotate(-12deg) rotateY(0)}25%{transform:translate(12px,-16px) rotate(-4deg) rotateY(24deg)}50%{transform:translate(2px,-28px) rotate(-14deg) rotateY(0)}75%{transform:translate(-10px,-14px) rotate(-8deg) rotateY(-24deg)}}
+@keyframes khf2{0%,100%{transform:translate(0,0) rotate(10deg) rotateX(0)}30%{transform:translate(-8px,-18px) rotate(2deg) rotateX(24deg)}60%{transform:translate(10px,-26px) rotate(14deg) rotateX(0)}80%{transform:translate(6px,-10px) rotate(6deg) rotateX(-24deg)}}
+@keyframes khf3{0%,100%{transform:translate(0,0) rotate(-6deg) rotateY(0)}33%{transform:translate(14px,-12px) rotate(8deg) rotateY(-26deg)}66%{transform:translate(-6px,-24px) rotate(-12deg) rotateY(26deg)}}
+@keyframes khhalo{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.5);opacity:0}}
+/* floating particles + meteor */
+.pt{position:absolute;top:640px;width:3px;height:3px;border-radius:50%;background:#9db4ff;box-shadow:0 0 8px 2px rgba(120,150,255,.8);opacity:0;animation:khup 9s linear infinite}
+.p1{left:8%}.p2{left:22%;animation-delay:-2s;background:#f0abfc}.p3{left:36%;animation-delay:-4s}.p4{left:48%;animation-delay:-6s;background:#7dd3fc}
+.p5{left:61%;animation-delay:-1s}.p6{left:74%;animation-delay:-3s;background:#f0abfc}.p7{left:86%;animation-delay:-5s}.p8{left:95%;animation-delay:-7s;background:#7dd3fc}
+@keyframes khup{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:.9}100%{transform:translateY(-520px) scale(1.3);opacity:0}}
+.meteor{position:absolute;top:70px;left:78%;width:110px;height:2px;border-radius:2px;rotate:-35deg;opacity:0;
+background:linear-gradient(90deg,#fff,rgba(160,190,255,0));animation:khmet 8s ease-in infinite}
+@keyframes khmet{0%{translate:0 0;opacity:0}3%{opacity:1}12%{translate:-300px 210px;opacity:0}100%{translate:-300px 210px;opacity:0}}
 @keyframes khtw{50%{opacity:.45}}
 @keyframes khwv{to{transform:translateX(-3%)}}
-@keyframes khgs{to{background-position:110px 0}}
-@keyframes khtf{50%{translate:0 -10px}}
 @media(max-width:600px){
-.bgtop .globe{width:220px;height:220px;right:-90px;top:90px;opacity:.55}
-.t1{left:2%;top:130px;width:36px;height:36px}.t2{left:2%;top:190px}.t3{left:4%;top:240px}}
+.bgtop .globe{width:230px;height:230px;right:-50px;top:78px}
+.t1{left:2%;top:112px;width:40px;height:40px;border-radius:12px}.t2{left:2%;top:178px;width:34px;height:34px;border-radius:10px}.t3{left:7%;top:232px;width:30px;height:30px;border-radius:9px}}
 
 /* ===== AI banner + robot ===== */
 .ai-section{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;padding:26px 28px;
@@ -389,26 +404,54 @@ border:1px solid rgba(124,140,255,.45);box-shadow:0 0 40px rgba(80,70,255,.25)}
 .ai-tag{display:inline-block;font-size:11px;padding:5px 11px;border-radius:999px;background:rgba(10,16,56,.7);border:1px solid rgba(140,150,255,.4);color:#c7d2fe;margin-bottom:12px}
 .ai-text h2{font-size:24px;margin-bottom:0}
 .ai-section .ai-text p{margin:10px 0 18px;max-width:420px;font-size:14px}
-.ai-robot{flex:0 0 44%;max-width:320px}
+.ai-robot{flex:0 0 46%;max-width:340px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .robot-svg{display:block;width:100%;height:auto;overflow:visible}
+.robot-svg text{font-family:Arial,sans-serif;font-size:11px;font-weight:700;fill:#1b1160}
+.r-t{opacity:0}.r-t1{opacity:1}
+.r-flame,.r-wave,.r-ecg{opacity:1}
+.r-ecg{stroke-dasharray:100}
+.r-row,.r-scan{opacity:1}
 @media(max-width:560px){
 .ai-section{flex-direction:column-reverse;text-align:center;padding:20px 16px}
 .ai-section .ai-text p{margin-left:auto;margin-right:auto}
-.ai-robot{flex:none;width:min(78%,250px)}}
+.ai-robot{flex:none;width:min(86%,290px)}}
 @media(prefers-reduced-motion:no-preference){
 .r-bot,.r-screen{animation:khrf 3.4s ease-in-out infinite}
-.r-screen{animation-delay:-1.2s;animation-duration:4s}
+.r-screen{animation-delay:-1.2s;animation-duration:4.2s}
 .r-head{animation:khrt 4.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+.r-eyes{animation:khre 6s ease-in-out infinite}
 .r-eye{animation:khrb 4.5s infinite;transform-box:fill-box;transform-origin:center}
-.r-arm{animation:khra 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 8%}
+.r-armL{animation:khal 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 8%}
+.r-armR{animation:khar 6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 8%}
 .r-ant{animation:khrp 1.6s ease-in-out infinite}
-.r-ring{animation:khrr 2.5s linear infinite}}
+.r-wave{animation:khrw 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.r-flame{animation:khfl .22s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 0}
+.r-ecg{animation:khecg 2.4s linear infinite}
+.r-lite{animation:khrp 1.2s ease-in-out infinite}
+.r-row{animation:khrow 4.2s ease-in-out infinite;transform-box:fill-box;transform-origin:0 50%}
+.r2{animation-delay:.4s}.r3{animation-delay:.8s}.r4{animation-delay:1.2s}
+.r-mag{animation:khmg 5s ease-in-out infinite}
+.r-scan{animation:khsc 2.8s linear infinite}
+.r-sp{animation:khsp 3.6s ease-out infinite}.s2{animation-delay:-1.2s}.s3{animation-delay:-2.2s}.s4{animation-delay:-.6s}
+.r-t{animation:khtx 9s linear infinite}
+.r-t1{animation-delay:0s}.r-t2{animation-delay:3s}.r-t3{animation-delay:6s}
+.ai-robot.hop .r-bot{animation:khhop .7s ease-out}}
 @keyframes khrf{50%{transform:translateY(-9px)}}
-@keyframes khrt{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes khrt{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes khre{0%,100%{transform:translate(0,0)}20%{transform:translate(3px,0)}40%{transform:translate(-3px,1px)}60%{transform:translate(0,-1px)}80%{transform:translate(2px,1px)}}
 @keyframes khrb{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
-@keyframes khra{0%,100%{transform:rotate(30deg)}50%{transform:rotate(52deg)}}
+@keyframes khal{0%,100%{transform:rotate(28deg)}50%{transform:rotate(50deg)}}
+@keyframes khar{0%,70%,100%{transform:rotate(-14deg)}78%{transform:rotate(-140deg)}84%{transform:rotate(-165deg)}90%{transform:rotate(-140deg)}95%{transform:rotate(-165deg)}}
 @keyframes khrp{50%{opacity:.35}}
-@keyframes khrr{to{stroke-dashoffset:-28}}
+@keyframes khrw{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+@keyframes khfl{from{transform:scaleY(.8)}to{transform:scaleY(1.2)}}
+@keyframes khecg{0%{stroke-dashoffset:100}60%{stroke-dashoffset:0}100%{stroke-dashoffset:-100}}
+@keyframes khrow{0%{transform:scaleX(0)}30%,85%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+@keyframes khmg{0%,100%{transform:translate(0,0)}25%{transform:translate(-22px,-8px)}50%{transform:translate(-36px,12px)}75%{transform:translate(-14px,22px)}}
+@keyframes khsc{0%{transform:translateY(0);opacity:0}15%{opacity:.8}85%{opacity:.8}100%{transform:translateY(88px);opacity:0}}
+@keyframes khsp{0%{transform:translateY(0);opacity:0}20%{opacity:1}100%{transform:translateY(-34px);opacity:0}}
+@keyframes khtx{0%{opacity:0}4%{opacity:1}28%{opacity:1}33%{opacity:0}100%{opacity:0}}
+@keyframes khhop{0%{transform:translateY(0)}35%{transform:translateY(-30px) scale(1.05)}100%{transform:translateY(0)}}
 </style>
 </head>
 
@@ -419,8 +462,14 @@ border:1px solid rgba(124,140,255,.45);box-shadow:0 0 40px rgba(80,70,255,.25)}
     <path d="M0 220C200 120 400 300 800 140" fill="none" stroke="url(#khWg)" stroke-width="2.5" opacity=".75"/>
     <path d="M0 252C250 180 450 292 800 192" fill="none" stroke="url(#khWg)" stroke-width="2" opacity=".5"/>
     <path d="M0 190C150 262 450 90 800 232" fill="none" stroke="url(#khWg)" stroke-width="1.5" opacity=".4"/></svg></div>
-<div class="bgtop" aria-hidden="true"><i class="globe"></i>
-  <span class="ftile t1">🔍</span><span class="ftile t2">🖼️</span><span class="ftile t3">▶️</span></div>
+<div class="bgtop" aria-hidden="true">
+  <div class="globe"><canvas id="khGlobe"></canvas></div>
+  <span class="ftile t1"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></span>
+  <span class="ftile t2"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-8 9"/></svg></span>
+  <span class="ftile t3"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
+  <i class="pt p1"></i><i class="pt p2"></i><i class="pt p3"></i><i class="pt p4"></i><i class="pt p5"></i><i class="pt p6"></i><i class="pt p7"></i><i class="pt p8"></i>
+  <i class="meteor"></i>
+</div>
 <header>
   <div class="logo">⌕ KHOJ</div>
   <nav id="nav">
@@ -537,26 +586,45 @@ border:1px solid rgba(124,140,255,.45);box-shadow:0 0 40px rgba(80,70,255,.25)}
       <p>Explore ideas and questions. A real AI service must be connected before KHOJ can generate its own answers.</p>
       <button class="primary" onclick="chooseCategory('ai')">Try AI Search ↗</button>
     </div>
-    <div class="ai-robot" aria-hidden="true">
-<svg class="robot-svg" viewBox="0 0 260 230"><defs>
-<linearGradient id="khRb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f7ff"/><stop offset="1" stop-color="#8ea8ff"/></linearGradient>
-<radialGradient id="khRg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#6d6bff" stop-opacity=".55"/><stop offset="1" stop-color="#6d6bff" stop-opacity="0"/></radialGradient></defs>
-<ellipse cx="170" cy="115" rx="98" ry="98" fill="url(#khRg)"/>
-<ellipse class="r-ring" cx="170" cy="205" rx="82" ry="14" fill="none" stroke="#5eb0ff" stroke-width="2" stroke-dasharray="7 7"/>
-<g class="r-screen"><path d="M12 64L98 52V128L12 140Z" fill="rgba(70,130,255,.28)" stroke="#7cc4ff" stroke-width="1.5"/>
-<circle cx="50" cy="92" r="15" fill="none" stroke="#fff" stroke-width="4"/><path d="M61 104L73 118" stroke="#fff" stroke-width="5" stroke-linecap="round"/></g>
-<g class="r-bot"><g transform="translate(70,0)">
-<rect class="r-arm" x="50" y="126" width="20" height="46" rx="10" fill="url(#khRb)"/>
-<rect x="130" y="130" width="20" height="44" rx="10" fill="url(#khRb)"/>
-<rect x="64" y="116" width="72" height="72" rx="30" fill="url(#khRb)"/>
-<circle class="r-ant" cx="100" cy="150" r="7" fill="#22d3ee"/>
-<g class="r-head"><line x1="100" y1="48" x2="100" y2="32" stroke="#8ea8ff" stroke-width="3"/><circle class="r-ant" cx="100" cy="27" r="5" fill="#22d3ee"/>
-<circle cx="46" cy="84" r="9" fill="#8ea8ff"/><circle cx="154" cy="84" r="9" fill="#8ea8ff"/>
-<rect x="52" y="48" width="96" height="72" rx="32" fill="url(#khRb)"/>
-<rect x="62" y="60" width="76" height="46" rx="22" fill="#0a1240"/>
-<ellipse class="r-eye" cx="84" cy="82" rx="7" ry="9" fill="#22d3ee"/><ellipse class="r-eye" cx="116" cy="82" rx="7" ry="9" fill="#22d3ee"/>
-<path d="M91 96Q100 103 109 96" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round"/></g>
-</g></g></svg>
+    <div class="ai-robot" id="khRobot" aria-hidden="true">
+<svg class="robot-svg" viewBox="0 0 300 240"><defs>
+<linearGradient id="khRb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#8ea8ff"/></linearGradient>
+<linearGradient id="khRv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2170"/><stop offset="1" stop-color="#070b3a"/></linearGradient>
+<linearGradient id="khFl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#7dd3fc"/><stop offset="1" stop-color="#6d6bff" stop-opacity="0"/></linearGradient>
+<radialGradient id="khRg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#6d6bff" stop-opacity=".55"/><stop offset="1" stop-color="#6d6bff" stop-opacity="0"/></radialGradient>
+<filter id="khGl" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<ellipse cx="190" cy="120" rx="112" ry="106" fill="url(#khRg)"/>
+<ellipse cx="190" cy="125" rx="92" ry="28" fill="none" stroke="rgba(120,180,255,.35)" stroke-dasharray="4 6"/>
+<circle r="4" fill="#22d3ee" filter="url(#khGl)"><animateMotion dur="6s" repeatCount="indefinite" path="M98 125a92 28 0 1 0 184 0a92 28 0 1 0 -184 0"/></circle>
+<circle r="3" fill="#f0abfc" filter="url(#khGl)"><animateMotion dur="9s" begin="-4s" repeatCount="indefinite" path="M98 125a92 28 0 1 0 184 0a92 28 0 1 0 -184 0"/></circle>
+<circle class="r-sp" cx="120" cy="175" r="2" fill="#9db4ff"/><circle class="r-sp s2" cx="268" cy="150" r="2.4" fill="#f0abfc"/><circle class="r-sp s3" cx="150" cy="62" r="1.8" fill="#7dd3fc"/><circle class="r-sp s4" cx="276" cy="96" r="2" fill="#9db4ff"/>
+<g class="r-screen"><path d="M10 62L108 50V140L10 152Z" fill="rgba(60,110,255,.22)" stroke="#7cc4ff" stroke-width="1.5"/>
+<circle cx="20" cy="70" r="2" fill="#f87171"/><circle cx="27" cy="69" r="2" fill="#fbbf24"/><circle cx="34" cy="68" r="2" fill="#4ade80"/>
+<rect x="18" y="80" width="82" height="12" rx="6" fill="rgba(255,255,255,.14)"/><rect class="r-row" x="24" y="84" width="40" height="4" rx="2" fill="#bfe0ff"/>
+<rect class="r-row r2" x="18" y="102" width="70" height="5" rx="2.5" fill="#7cc4ff"/><rect class="r-row r3" x="18" y="114" width="54" height="5" rx="2.5" fill="#c4b5fd"/><rect class="r-row r4" x="18" y="126" width="62" height="5" rx="2.5" fill="#7cc4ff"/>
+<g class="r-mag"><circle cx="80" cy="112" r="11" fill="rgba(120,200,255,.18)" stroke="#fff" stroke-width="3"/><path d="m88 120 8 9" stroke="#fff" stroke-width="4" stroke-linecap="round"/></g>
+<rect class="r-scan" x="10" y="58" width="98" height="2" fill="#7cf"/></g>
+<g class="r-bot">
+<path class="r-flame" d="M176 188Q190 240 204 188Z" fill="url(#khFl)"/><ellipse cx="190" cy="188" rx="22" ry="5" fill="#5eb0ff" opacity=".55"/>
+<g class="r-armL"><rect x="150" y="124" width="16" height="42" rx="8" fill="url(#khRb)"/><circle cx="158" cy="168" r="10" fill="url(#khRb)"/></g>
+<g class="r-armR"><rect x="214" y="124" width="16" height="42" rx="8" fill="url(#khRb)"/><circle cx="222" cy="168" r="10" fill="url(#khRb)"/></g>
+<rect x="160" y="116" width="60" height="72" rx="28" fill="url(#khRb)"/>
+<rect x="172" y="132" width="36" height="24" rx="9" fill="url(#khRv)"/>
+<path class="r-ecg" pathLength="100" d="M176 144h6l3-8 5 16 4-12 3 4h8" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect class="r-lite" x="172" y="166" width="36" height="6" rx="3" fill="#6d6bff"/>
+<g class="r-head"><path d="M148 78A42 40 0 0 1 232 78" fill="none" stroke="#7b8cff" stroke-width="5" stroke-linecap="round"/>
+<line x1="190" y1="50" x2="190" y2="33" stroke="#8ea8ff" stroke-width="3"/>
+<circle class="r-wave" cx="190" cy="27" r="7" fill="none" stroke="#22d3ee" stroke-width="1.5"/><circle class="r-ant" cx="190" cy="27" r="5" fill="#22d3ee" filter="url(#khGl)"/>
+<ellipse cx="144" cy="86" rx="7" ry="14" fill="#7b8cff"/><ellipse cx="236" cy="86" rx="7" ry="14" fill="#7b8cff"/>
+<rect x="148" y="50" width="84" height="70" rx="32" fill="url(#khRb)"/>
+<rect x="156" y="60" width="68" height="48" rx="22" fill="url(#khRv)" stroke="rgba(120,180,255,.5)"/>
+<g class="r-eyes"><ellipse class="r-eye" cx="176" cy="82" rx="6.5" ry="9" fill="#22d3ee" filter="url(#khGl)"/><ellipse class="r-eye" cx="204" cy="82" rx="6.5" ry="9" fill="#22d3ee" filter="url(#khGl)"/>
+<circle cx="174" cy="78.5" r="2" fill="#fff"/><circle cx="202" cy="78.5" r="2" fill="#fff"/></g>
+<circle cx="166" cy="95" r="4.5" fill="#f472b6" opacity=".45"/><circle cx="214" cy="95" r="4.5" fill="#f472b6" opacity=".45"/>
+<path d="M183 96Q190 103 197 96" fill="none" stroke="#22d3ee" stroke-width="2.6" stroke-linecap="round"/></g>
+<g><rect x="226" y="6" width="68" height="26" rx="13" fill="#fff" opacity=".96"/><path d="M238 31L233 42L250 31Z" fill="#fff" opacity=".96"/>
+<text class="r-t r-t1" x="260" y="23" text-anchor="middle">Namaste!</text><text class="r-t r-t2" x="260" y="23" text-anchor="middle">Khojo!</text><text class="r-t r-t3" x="260" y="23" text-anchor="middle">Ask me!</text></g>
+</g></svg>
     </div>
   </section>
 </main>
@@ -1899,5 +1967,10 @@ h1{font-size:clamp(40px,12vw,64px)!important}
 .category.active,.category:hover{background:linear-gradient(110deg,#5b3df0,#3b6ff6)!important;border-color:#7c8cff!important;color:#fff!important}
 .hint{color:#9aa8d6!important}
 </style>
-</body>
-</html>
+<script>
+/* ===== KHOJ rotating globe + robot tap ===== */
+(function(){
+var cv=document.getElementById('khGlobe');
+if(cv&&cv.getContext){
+var ctx=cv.getContext('2d'),S=0,R=0,dpr=1;
+var LC=[13828,14548,14552,15268,15271,15274,15992,15995,16232,16712,16715,16718,16955,16958,17436,17439,17442,17655,18159,18162,18165,18405,18880,18883,18886,18889,18892,19096,19099,19129,19603,19606,19609,19612,19615,19813,19816,19819,19822,20324,20327,20330,20333,20336,20339,20417,20420,20513,20516,20519,20531,20534,20537,20540,20543,20546,21047,21050,21053,21056,21059,21062,21065,21137,21140,21143,21146,21233,21236,21239,21242,21245,21251,21254,21257,21260,21263,21266,21269,21771,21774,21777,21780,21783,21786,21789,21858,21861,21864,21867,21870,21957,21960,21963,21966,21969,21972,21975,21978,21981,21984,21987,21990,22491,22494,22497,22500,22503,22506,22509,22512,22578,22581,22584,22587,22590,22593,22677,22680,22683,22686,22689,22692,22695,22698,22701,22704,22707,22710,22713,23215,23218,23221,23224,23227,23230,23233,23299,23302,23305,23308,23311,23314,23398,23401,23404,23407,23410,23413,23416,23419,23422,23425,23428,23431,23434,23437,23938,23941,23944,23947,23950,23953,23956,23959,24022,24025,24028,24031,
