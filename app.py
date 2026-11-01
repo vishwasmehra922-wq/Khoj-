@@ -6,9 +6,10 @@ from google.genai import types
 
 app = Flask(__name__)
 
-# Websites allowed to call this API (add your own domain here if you have one)
+# Websites allowed to call this API
 ALLOWED = [
     "https://vishwasmehra922-wq.github.io",
+    "https://khoj-1-ogw8.onrender.com",
     "http://localhost:5500",
     "http://127.0.0.1:5500",
 ]
@@ -16,7 +17,7 @@ ALLOWED += [o.strip() for o in os.environ.get("ALLOWED_ORIGINS", "").split(",") 
 CORS(app, origins=ALLOWED)
 
 API_KEY = os.environ.get("GEMINI_API_KEY")
-MODEL = "gemini-2.5-flash"
+MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
 client = genai.Client(api_key=API_KEY) if API_KEY else None
 
 SYSTEM = (
@@ -51,9 +52,8 @@ def ask():
             contents=question,
             config=types.GenerateContentConfig(
                 system_instruction=system,
-                temperature=0.6,
-                max_output_tokens=800,
-                thinking_config=types.ThinkingConfig(thinking_budget=0),
+                max_output_tokens=1500,
+                thinking_config=types.ThinkingConfig(thinking_level="low"),
             ),
         )
         answer = (response.text or "").strip()
